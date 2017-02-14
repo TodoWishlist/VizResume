@@ -1,0 +1,17 @@
+.storyWrapper {
+  width: 100%;
+  /*max-width: 990px;*/
+  /*margin: 0 auto;*/
+  border-bottom: 1px solid #d0d4d9;
+}
+
+.row {
+  margin: 60px auto;
+  padding: 0;
+  overflow: hidden
+}
+
+.rowContent {
+  max-width: 990px;
+  margin: 0 auto
+}

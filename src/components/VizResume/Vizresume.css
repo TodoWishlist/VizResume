@@ -1,0 +1,26 @@
+/*.svgContainer {
+}*/
+
+.barRect {
+  fill: rgb(218, 103, 97)
+}
+
+.barRect:hover {
+  fill: rgb(229, 190, 157)
+}
+
+.barLabels {
+  text-anchor: end;
+  font-size: 10px;
+  font-weight: 300;
+  fill: rgb(41, 41, 41);
+  font-family: AtlasGrotesk,sans-serif
+}
+
+.barTitle {
+  text-anchor: middle;
+  font-size: 14px;
+  font-family: Oswald;
+  weight: 300;
+  fill: #525252
+}

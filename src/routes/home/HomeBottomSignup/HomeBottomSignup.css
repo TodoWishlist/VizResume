@@ -1,0 +1,18 @@
+.header {
+  font-size: 38px;
+  font-size: 2.375rem;
+  line-height: 48px;
+  line-height: 3rem;
+  text-align: center;
+  /*color: #fff ;*/
+  -webkit-font-smoothing: antialiased;
+  margin: 40px 40px;
+}
+
+.BottomSignupWrapper {
+  width: 100%;
+  max-width: 990px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d0d4d9;
+}

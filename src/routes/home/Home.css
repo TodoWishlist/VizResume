@@ -1,0 +1,13 @@
+.supremeContainer {
+  width: 100%;
+}
+
+.header {
+  color: #47525d;
+  font-size: 48px;
+  font-weight: 600;
+  max-width: 100%;
+  text-align: center;
+  margin-top: 160px;
+  margin-bottom: 160px
+}

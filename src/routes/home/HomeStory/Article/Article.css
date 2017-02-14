@@ -1,0 +1,31 @@
+.articleWrapper {
+  display: flex;
+}
+
+.storyImageWrapper {
+  flex: 1
+}
+
+.storyContentWrapper {
+  flex: 1;
+  position: relative
+}
+
+.storyImage {
+  width: 80%;
+  height: 252px;
+  vertical-align: bottom;
+  margin: 0 auto
+}
+
+.storyContent {
+  max-width: 70%;
+  padding-left: 50px;
+  position: absolute;
+  bottom: 10px
+}
+
+.header2 {
+  font-weight: 600;
+  font-size: 26px
+}
