@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import vizresume from '../../components/VizResume';
+import Vizresume from '../../components/VizResume';
 import styles from './Example.css';
 
 class Example extends Component {
   render() {
     return (
-      <Container>
-        xxx
-        <vizresume />
-      </Container>
+      <div>
+        <Vizresume />
+      </div>
     );
   }
 }

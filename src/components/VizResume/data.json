@@ -1,0 +1,68 @@
+[
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2007",
+    "proficiency": 20
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2008",
+    "proficiency": 40
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2010",
+    "proficiency": 60
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2012",
+    "proficiency": 80
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2008",
+    "proficiency": 50
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2012",
+    "proficiency": 80
+  },
+  {
+    "skill": "MongoDB",
+    "parent": "Database",
+    "time": "2012",
+    "proficiency": 30
+  },
+  {
+    "skill": "MongoDB",
+    "parent": "Database",
+    "time": "2016",
+    "proficiency": 70
+  },
+  {
+    "skill": "PostgreSQL",
+    "parent": "Database",
+    "time": "2016",
+    "proficiency": 80
+  },
+  {
+    "skill": "SQL Server",
+    "parent": "Database",
+    "time": "2016",
+    "proficiency": 50
+  },
+  {
+    "skill": "Teradata",
+    "parent": "Database",
+    "time": "2012",
+    "proficiency": 30
+  }
+]

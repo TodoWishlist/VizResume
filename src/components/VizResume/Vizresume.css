@@ -1,12 +1,32 @@
-/*.svgContainer {
-}*/
+.upperContainer {
+  transform: translate(0, 0);
+}
+
+.lowerContainer {
+  transform: translate(0, 300px);
+}
+
+.sunContainer {
+  transform: translate(0, 0);
+}
+
+.barContainer {
+  transform: translate(750px, 0);
+}
+
+.barBody {
+  transform: translate(0, 0);
+}
+
+.barAxis {
+}
 
 .barRect {
-  fill: rgb(218, 103, 97)
+  fill: rgb(218, 103, 97);
 }
 
 .barRect:hover {
-  fill: rgb(229, 190, 157)
+  fill: rgb(229, 190, 157);
 }
 
 .barLabels {
@@ -14,7 +34,7 @@
   font-size: 10px;
   font-weight: 300;
   fill: rgb(41, 41, 41);
-  font-family: AtlasGrotesk,sans-serif
+  font-family: AtlasGrotesk, sans-serif;
 }
 
 .barTitle {
@@ -22,5 +42,5 @@
   font-size: 14px;
   font-family: Oswald;
   weight: 300;
-  fill: #525252
+  fill: #525252;
 }
