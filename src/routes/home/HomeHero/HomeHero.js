@@ -13,12 +13,11 @@ class HomeHero extends Component {
   render() {
     return (
       <section>
-        <div className={styles.image} />
         <div className={styles.contentContainer}>
           <div className={styles.content}>
-            <h1 className={styles.header1}>Dare To Act&Think</h1>
+            <h1 className={styles.header1}>Let's play with resume</h1>
             <p className={styles.subCopy}>
-                Anytime, Anywhere, Anthing, Todo&Wish lets your life easier.
+                Make resume different
             </p>
           </div>
           <SignupForm dataSet={this.state} />

@@ -16,25 +16,25 @@ class HomeStory extends Component {
 
   componentWillMount() {
     this.setState({ dataSet:
-        [{
-          header: 'Get help',
-          paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
-          image: 'https://source.unsplash.com/user/erondu/590x300',
-          order: 'image-right',
-        },
-        {
-          header: 'Face To Face Friend',
-          paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
-          image: 'https://source.unsplash.com/user/erondu/590x300',
-          order: 'image-left',
-        },
-        {
-          header: 'Make dream come true',
-          paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
-          image: 'https://source.unsplash.com/user/erondu/590x300',
-          order: 'image-right',
-        }],
-      }
+    [{
+      header: 'Get help',
+      paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
+      image: 'https://source.unsplash.com/user/erondu/590x300',
+      order: 'image-right',
+    },
+    {
+      header: 'Face To Face Friend',
+      paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
+      image: 'https://source.unsplash.com/user/erondu/590x300',
+      order: 'image-left',
+    },
+    {
+      header: 'Make dream come true',
+      paragraph: 'Post your wish in the wish list. You can get response and help quickly.',
+      image: 'https://source.unsplash.com/user/erondu/590x300',
+      order: 'image-right',
+    }],
+    },
     );
 
     this.setState({ extendDataSet:
@@ -76,7 +76,7 @@ class HomeStory extends Component {
               <Article dataSet={data} />
               <ExpandingHowToUse extendDataSet={this.state.extendDataSet[index]} />
             </div>
-          </div>
+          </div>,
         )}
       </section>
     );

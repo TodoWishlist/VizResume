@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-
-// const Links = () =>
-//   <nav>
-//     <Link to="/">Home</Link>
-//     <Link to="/marketplace">marketplace</Link>
-//   </nav>;
+import styles from './Header.css';
 
 class Header extends Component {
   constructor(props) {
@@ -23,9 +18,9 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light toggleable>
+        <Navbar color="faded" light toggleable className={styles.navbarContainer}>
           <NavbarToggler right onClick={::this.toggle} />
-          <NavbarBrand href="/">&#9774; Todo&Wish</NavbarBrand>
+          <NavbarBrand href="/">&#9774; Viz u resume</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
@@ -33,9 +28,6 @@ class Header extends Component {
               </NavItem>
               <NavItem>
                 <NavLink href="/example">example</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Sign Up</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#">Log In</NavLink>
@@ -54,4 +46,4 @@ class Header extends Component {
 //   intl: PropTypes.object.isRequired,
 // };
 
-export default Header;
+export default withStyles(styles)(Header);

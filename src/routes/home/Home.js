@@ -5,6 +5,7 @@ import styles from './Home.css';
 import HomeHero from './HomeHero/HomeHero';
 import HomeStory from './HomeStory/HomeStory';
 import HomeBottomSignup from './HomeBottomSignup/HomeBottomSignup';
+import Demo from './Demo/Demo';
 
 class Home extends Component {
   constructor(props) {
@@ -17,8 +18,9 @@ class Home extends Component {
   render() {
     return (
       <div className={styles.supremeContainer}>
-        <HomeHero />
         <h1 className={styles.header}>Viz u resume</h1>
+        <HomeHero />
+        <Demo />
         <HomeStory />
         <HomeBottomSignup />
       </div>
