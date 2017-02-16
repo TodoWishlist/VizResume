@@ -46,10 +46,37 @@
     //  this.radarChartDrawBase(allCategoryValue);
     //  this.radarChartDrawLine([['a', 'b', 'c'], allCategoryValue]);
      this.barChart(dataSet);
+     this.scatterChart(dataSet);
    };
 
-   radarChart = () => {
-
+   scatterChart = (dataSet) => {
+    //  dataSet.forEach((d) =>
+    //   parseTime(d.date),
+    // );
+     console.log(dataSet);
+     const upperContainer = d3.select(`.${styles.upperContainer}`);
+     const x = d3.scaleLinear().range([50, 1000]);
+     const y = d3.scaleLinear().range([400, 50]);
+     x.domain(d3.extent(dataSet, (d) => d.time));
+     y.domain([0, d3.max(dataSet, (d) => d.proficiency)]);
+     upperContainer.selectAll('dot')
+                    .data(dataSet, (d) => `${d.skill}-${d.time}`)
+                    .enter().append('circle')
+                    .attr('class', (d) => `${d.skill}-${d.time}`)
+                    .attr('r', 5)
+                    .attr('cx', (d) => x(d.time))
+                    .attr('cy', (d) => y(d.proficiency));
+     const a = upperContainer.selectAll('circle')
+                  .data(dataSet, (d) => `${d.skill}-${d.time}`);
+     a.transition()
+      .duration(2000)
+      .attr('cx', 50)
+      .attr('cy', 550);
+     a.transition()
+       .duration(2000)
+       .delay(2000)
+       .attr('cx', (d, i) => `${50 + (i * 10)}`)
+       .attr('cy', 550);
    }
 
    barChart = (dataSet) => {
