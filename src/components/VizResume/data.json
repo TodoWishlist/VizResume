@@ -2,67 +2,78 @@
   {
     "skill": "MySQL",
     "parent": "Database",
-    "time": "2007",
-    "proficiency": 20
+    "time": "2007-01",
+    "proficiency": 20,
+    "EOrW": "Edu"
   },
   {
     "skill": "MySQL",
     "parent": "Database",
-    "time": "2008",
-    "proficiency": 40
+    "time": "2008-02",
+    "proficiency": 40,
+    "EOrW": "Edu"
   },
   {
     "skill": "MySQL",
     "parent": "Database",
-    "time": "2010",
-    "proficiency": 60
+    "time": "2010-03",
+    "proficiency": 60,
+    "EOrW": "Edu"
   },
   {
     "skill": "MySQL",
     "parent": "Database",
-    "time": "2012",
-    "proficiency": 80
+    "time": "2012-04",
+    "proficiency": 80,
+    "EOrW": "Work"
   },
   {
     "skill": "SQL",
     "parent": "Database",
-    "time": "2008",
-    "proficiency": 50
+    "time": "2008-05",
+    "proficiency": 50,
+    "EOrW": "Edu"
   },
   {
     "skill": "SQL",
     "parent": "Database",
-    "time": "2012",
-    "proficiency": 80
+    "time": "2012-06",
+    "proficiency": 80,
+    "EOrW": "Work"
   },
   {
     "skill": "MongoDB",
     "parent": "Database",
-    "time": "2012",
-    "proficiency": 30
+    "time": "2012-07",
+    "proficiency": 30,
+    "EOrW": "Edu"
   },
   {
     "skill": "MongoDB",
     "parent": "Database",
-    "time": "2016",
-    "proficiency": 70
+    "time": "2016-08",
+    "proficiency": 70,
+    "EOrW": "Edu"
   },
   {
     "skill": "PostgreSQL",
     "parent": "Database",
-    "time": "2016",
-    "proficiency": 80
+    "time": "2016-09",
+    "proficiency": 80,
+    "EOrW": "Work"
   },
   {
     "skill": "SQL Server",
     "parent": "Database",
-    "time": "2016",
-    "proficiency": 50
+    "time": "2016-08",
+    "proficiency": 50,
+    "EOrW": "Work"
   },
   {
     "skill": "Teradata",
     "parent": "Database",
-    "time": "2012",
-    "proficiency": 30
+    "time": "2012-01",
+    "proficiency": 30,
+    "EOrW": "Work"
   }
 ]

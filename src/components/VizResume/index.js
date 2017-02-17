@@ -50,33 +50,47 @@
    };
 
    scatterChart = (dataSet) => {
-    //  dataSet.forEach((d) =>
-    //   parseTime(d.date),
-    // );
-     console.log(dataSet);
+     const parseDate = d3.timeParse('%Y-%m');
+     const dataSetReformat = dataSet.map((d) => {
+       const rObj = Object.assign({}, d);
+       rObj.time = parseDate(rObj.time);
+       return rObj;
+     });
      const upperContainer = d3.select(`.${styles.upperContainer}`);
-     const x = d3.scaleLinear().range([50, 1000]);
-     const y = d3.scaleLinear().range([400, 50]);
-     x.domain(d3.extent(dataSet, (d) => d.time));
-     y.domain([0, d3.max(dataSet, (d) => d.proficiency)]);
+     const xScale = d3.scaleTime().range([150, 1200]);
+     const yScale = d3.scaleLinear().range([300, 50]);
+     xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+     yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      upperContainer.selectAll('dot')
-                    .data(dataSet, (d) => `${d.skill}-${d.time}`)
+                    .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
                     .enter().append('circle')
                     .attr('class', (d) => `${d.skill}-${d.time}`)
                     .attr('r', 5)
-                    .attr('cx', (d) => x(d.time))
-                    .attr('cy', (d) => y(d.proficiency));
+                    .attr('cx', (d) => xScale(d.time))
+                    .attr('cy', (d) => yScale(d.proficiency))
+                    .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+     upperContainer.append('g')
+      .attr('transform', 'translate(0, 30)')
+      .call(d3.axisTop(xScale));
+     upperContainer.append('g')
+      .attr('transform', 'translate(100, 0)')
+        .call(d3.axisLeft(yScale));
      const a = upperContainer.selectAll('circle')
-                  .data(dataSet, (d) => `${d.skill}-${d.time}`);
+                  .data(dataSetReformat, (d) => `${d.skill}-${d.time}`);
      a.transition()
       .duration(2000)
-      .attr('cx', 50)
-      .attr('cy', 550);
+      .attr('cx', 350)
+      .attr('cy', 600);
      a.transition()
        .duration(2000)
        .delay(2000)
-       .attr('cx', (d, i) => `${50 + (i * 10)}`)
-       .attr('cy', 550);
+       .attr('cx', (d, i) => `${350 + (i * 10)}`)
+       .attr('cy', 600);
+     a.transition()
+      .duration(2000)
+      .delay(4000)
+      .attr('cx', (d) => xScale(d.time))
+      .attr('cy', (d) => yScale(d.proficiency));
    }
 
    barChart = (dataSet) => {
