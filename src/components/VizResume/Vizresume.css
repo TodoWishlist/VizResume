@@ -2,6 +2,13 @@
   transform: translate(0, 0);
 }
 
+.timeLine {
+}
+
+.scatterChart {
+  transform: translate(0, 100px);
+}
+
 .lowerContainer {
   transform: translate(0, 400px);
 }
@@ -11,7 +18,7 @@
 }
 
 .barContainer {
-  transform: translate(750px, 0);
+  transform: translate(750px, 150px);
 }
 
 .barBody {

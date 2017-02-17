@@ -47,6 +47,7 @@
     //  this.radarChartDrawLine([['a', 'b', 'c'], allCategoryValue]);
      this.barChart(dataSet);
      this.scatterChart(dataSet);
+     this.sunChart();
    };
 
    scatterChart = (dataSet) => {
@@ -56,7 +57,7 @@
        rObj.time = parseDate(rObj.time);
        return rObj;
      });
-     const upperContainer = d3.select(`.${styles.upperContainer}`);
+     const upperContainer = d3.select(`.${styles.scatterChart}`);
      const xScale = d3.scaleTime().range([150, 1200]);
      const yScale = d3.scaleLinear().range([300, 50]);
      xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
@@ -69,28 +70,40 @@
                     .attr('cx', (d) => xScale(d.time))
                     .attr('cy', (d) => yScale(d.proficiency))
                     .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+    // add x Axis
      upperContainer.append('g')
       .attr('transform', 'translate(0, 30)')
-      .call(d3.axisTop(xScale));
+      .call(d3.axisTop(xScale).ticks(4));
+    // add y Axis
      upperContainer.append('g')
       .attr('transform', 'translate(100, 0)')
-        .call(d3.axisLeft(yScale));
+        .call(d3.axisLeft(yScale).ticks(3));
+
      const a = upperContainer.selectAll('circle')
                   .data(dataSetReformat, (d) => `${d.skill}-${d.time}`);
      a.transition()
       .duration(2000)
-      .attr('cx', 350)
-      .attr('cy', 600);
+      .attr('cx', 365)
+      .attr('cy', 500);
      a.transition()
        .duration(2000)
        .delay(2000)
-       .attr('cx', (d, i) => `${350 + (i * 10)}`)
-       .attr('cy', 600);
+       .attr('cx', (d, i) => `${365 + (i * 10)}`)
+       .attr('cy', 500);
      a.transition()
       .duration(2000)
       .delay(4000)
       .attr('cx', (d) => xScale(d.time))
       .attr('cy', (d) => yScale(d.proficiency));
+   }
+
+   sunChart = () => {
+     const sunChart = d3.select(`.${styles.sunContainer}`);
+     sunChart.append('circle')
+      .attr('cx', 350)
+      .attr('cy', 200)
+      .attr('r', 10)
+      .attr('fill', '#8d8482');
    }
 
    barChart = (dataSet) => {
@@ -226,7 +239,10 @@
      return (
        <div id={'viz'}>
          <svg id={'vizSvg'}>
-           <g className={styles.upperContainer} />
+           <g className={styles.upperContainer}>
+             <g className={styles.timeLine} />
+             <g className={styles.scatterChart} />
+           </g>
            <g className={styles.lowerContainer}>
              <g className={styles.sunContainer} />
              <g className={styles.barContainer}>
