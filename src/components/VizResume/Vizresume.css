@@ -51,3 +51,7 @@
   weight: 300;
   fill: #525252;
 }
+
+.line {
+  stroke-width:2;
+}

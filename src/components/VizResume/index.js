@@ -48,6 +48,7 @@
      this.barChart(dataSet);
      this.scatterChart(dataSet);
      this.sunChart();
+     this.timeLine();
    };
 
    scatterChart = (dataSet) => {
@@ -60,7 +61,8 @@
      const upperContainer = d3.select(`.${styles.scatterChart}`);
      const xScale = d3.scaleTime().range([150, 1200]);
      const yScale = d3.scaleLinear().range([300, 50]);
-     xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+    //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+     xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      upperContainer.selectAll('dot')
                     .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
@@ -95,6 +97,94 @@
       .delay(4000)
       .attr('cx', (d) => xScale(d.time))
       .attr('cy', (d) => yScale(d.proficiency));
+   }
+
+   timeLine = () => {
+     const dataTimeLine = [
+       {
+         name: 'SHU',
+         start: '2007-03',
+         end: '2011-03',
+         EOrW: 'Edu',
+       },
+       {
+         name: 'PWC',
+         start: '2010-09',
+         end: '2010-12',
+         EOrW: 'Work',
+       },
+       {
+         name: 'Citi/CSC',
+         start: '2011-03',
+         end: '2012-12',
+         EOrW: 'Work',
+       },
+       {
+         name: 'GWU',
+         start: '2013-01',
+         end: '2014-08',
+         EOrW: 'Edu',
+       },
+       {
+         name: 'NETE',
+         start: '2014-06',
+         end: '2017-02',
+         EOrW: 'Work',
+       },
+     ];
+     const parseDate = d3.timeParse('%Y-%m');
+     const dataTimeLineReformat = dataTimeLine.map((d) => {
+       const rObj = Object.assign({}, d);
+       rObj.start = parseDate(rObj.start);
+       rObj.end = parseDate(rObj.end);
+       return rObj;
+     });
+     const xScale = d3.scaleTime().range([150, 1200]);
+     const yScale = d3.scaleOrdinal().range([30, 60]);
+     const yTextScale = d3.scaleOrdinal().range([25, 70]);
+     xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
+     yScale.domain(['Work', 'Edu']);
+     yTextScale.domain(['Work', 'Edu']);
+
+     const timeLine = d3.select(`.${styles.timeLine}`);
+     timeLine.selectAll('line')
+      .data(dataTimeLineReformat, (d) => `${d.name}`)
+      .enter()
+      .append('line')
+      .attr('class', styles.line)
+      .attr('x1', (d) => xScale(d.start))
+      .attr('y1', (d) => yScale(d.EOrW))
+      .attr('x2', (d) => xScale(d.end))
+      .attr('y2', (d) => yScale(d.EOrW))
+      .style('stroke', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+
+     timeLine.selectAll('circle.start')
+       .data(dataTimeLineReformat, (d) => `${d.name}-${d.start}`)
+       .enter()
+       .append('circle')
+       .attr('cx', (d) => xScale(d.start))
+       .attr('cy', (d) => yScale(d.EOrW))
+       .attr('r', 3)
+       .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+
+     timeLine.selectAll('circle.end')
+         .data(dataTimeLineReformat, (d) => `${d.name}-${d.end}`)
+         .enter()
+         .append('circle')
+         .attr('cx', (d) => xScale(d.end))
+         .attr('cy', (d) => yScale(d.EOrW))
+         .attr('r', 3)
+         .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+
+     timeLine.selectAll('text')
+        .data(dataTimeLineReformat, String)
+        .enter()
+        .append('text')
+        .attr('x', (d) => ((xScale(d.start) + xScale(d.end)) / 2) - 10)
+        .attr('y', (d) => yTextScale(d.EOrW))
+        .text((d) => d.name)
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '10px');
    }
 
    sunChart = () => {
