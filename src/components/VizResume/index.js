@@ -74,10 +74,12 @@
                     .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
     // add x Axis
      upperContainer.append('g')
+      .attr('class', styles.upperXAxis)
       .attr('transform', 'translate(0, 30)')
       .call(d3.axisTop(xScale).ticks(4));
     // add y Axis
      upperContainer.append('g')
+      .attr('class', styles.upperYAxis)
       .attr('transform', 'translate(100, 0)')
         .call(d3.axisLeft(yScale).ticks(3));
 
@@ -141,7 +143,7 @@
      });
      const xScale = d3.scaleTime().range([150, 1200]);
      const yScale = d3.scaleOrdinal().range([30, 60]);
-     const yTextScale = d3.scaleOrdinal().range([25, 70]);
+     const yTextScale = d3.scaleOrdinal().range([25, 75]);
      xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain(['Work', 'Edu']);
      yTextScale.domain(['Work', 'Edu']);
@@ -180,6 +182,7 @@
         .data(dataTimeLineReformat, String)
         .enter()
         .append('text')
+        .attr('class', styles.timeLineText)
         .attr('x', (d) => ((xScale(d.start) + xScale(d.end)) / 2) - 10)
         .attr('y', (d) => yTextScale(d.EOrW))
         .text((d) => d.name)
