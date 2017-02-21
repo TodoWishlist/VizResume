@@ -34,8 +34,6 @@
      d3.select('#vizSvg')
          .attr('width', '1500px')
          .attr('height', '800px');
-
-    // d3.select('#upperContainer')
    }
 
    // add viz function
@@ -47,79 +45,7 @@
      this.scatterChart(dataSetReformat);
      this.sunChart();
      this.timeLine();
-     this.testDatabase(dataSetReformat);
-     this.testETL(dataSetReformat);
    };
-   testDatabase = (dataSetReformat) => {
-     d3.select('#Database')
-        .on('click', () => {
-          const parseDate = d3.timeParse('%Y-%m');
-          const upperContainer = d3.select(`.${styles.scatterChart}`);
-          const xScale = d3.scaleTime().range([150, 1200]);
-          const yScale = d3.scaleLinear().range([300, 50]);
-         //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-          xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
-          yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
-          const centreX = 350;
-          const centreY = 500;
-          const centreR = 10;
-          const a = upperContainer.selectAll('circle')
-           .data(this.circlePositionCal(dataSetReformat, 'Database'), (d) => `${d.skill}-${d.time}`);
-          a.transition()
-           .duration(2000)
-           // .attr('cx', 365)
-           .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
-           // .attr('cy', 500);
-           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
-          a.transition()
-            .duration(2000)
-            .delay(2000)
-           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
-            .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
-           //  .attr('cy', 500);
-           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
-          a.transition()
-           .duration(2000)
-           .delay(4000)
-           .attr('cx', (d) => xScale(d.time))
-           .attr('cy', (d) => yScale(d.proficiency));
-        });
-   }
-   testETL = (dataSetReformat) => {
-     d3.select('#ETL')
-        .on('click', () => {
-          const parseDate = d3.timeParse('%Y-%m');
-          const upperContainer = d3.select(`.${styles.scatterChart}`);
-          const xScale = d3.scaleTime().range([150, 1200]);
-          const yScale = d3.scaleLinear().range([300, 50]);
-         //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-          xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
-          yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
-          const centreX = 350;
-          const centreY = 500;
-          const centreR = 10;
-          const a = upperContainer.selectAll('circle')
-           .data(this.circlePositionCal(dataSetReformat, 'ETL'), (d) => `${d.skill}-${d.time}`);
-          a.transition()
-           .duration(2000)
-           // .attr('cx', 365)
-           .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
-           // .attr('cy', 500);
-           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
-          a.transition()
-            .duration(2000)
-            .delay(2000)
-           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
-            .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
-           //  .attr('cy', 500);
-           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
-          a.transition()
-           .duration(2000)
-           .delay(4000)
-           .attr('cx', (d) => xScale(d.time))
-           .attr('cy', (d) => yScale(d.proficiency));
-        });
-   }
    // reformat the time
    dataInit = (dataSet) => {
      const parseDate = d3.timeParse('%Y-%m');
@@ -212,16 +138,10 @@
 
    scatterChart = (dataSetReformat) => {
      const parseDate = d3.timeParse('%Y-%m');
-    //  const dataSetReformat = dataSet.map((d) => {
-    //    const rObj = Object.assign({}, d);
-    //    rObj.time = parseDate(rObj.time);
-    //    return rObj;
-    //  });
-    //  console.log(this.circlePositionCal(dataSetReformat));
      const upperContainer = d3.select(`.${styles.scatterChart}`);
      const xScale = d3.scaleTime().range([150, 1200]);
      const yScale = d3.scaleLinear().range([300, 50]);
-     const rScale = d3.scaleLinear().range([3, 10]);
+     const rScale = d3.scaleLinear().range([1, 10]);
     //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
      xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
@@ -251,31 +171,7 @@
       .append('g')
       .attr('class', styles.upperYAxis)
       .attr('transform', 'translate(100, 0)')
-        .call(d3.axisLeft(yScale).ticks(3));
-
-    //  const centreX = 350;
-    //  const centreY = 500;
-    //  const centreR = 10;
-    //  const a = upperContainer.selectAll('circle')
-    //   .data(this.circlePositionCal(dataSetReformat), (d) => `${d.skill}-${d.time}`);
-    //  a.transition()
-    //   .duration(2000)
-    //   // .attr('cx', 365)
-    //   .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
-    //   // .attr('cy', 500);
-    //   .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
-    //  a.transition()
-    //    .duration(2000)
-    //    .delay(2000)
-    //   //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
-    //    .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
-    //   //  .attr('cy', 500);
-    //   .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
-    //  a.transition()
-    //   .duration(2000)
-    //   .delay(4000)
-    //   .attr('cx', (d) => xScale(d.time))
-    //   .attr('cy', (d) => yScale(d.proficiency));
+        .call(d3.axisLeft(yScale).ticks(4));
    }
 
    timeLine = () => {
@@ -378,7 +274,7 @@
       .attr('fill', '#8d8482');
    }
 
-   barChart = (dataSet) => {
+   barChart = (dataSetReformat) => {
     //  console.log(dataSet);
     //  const viz = d3.select('#vizSvg');
      const barBackgroundHeight = 25;
@@ -386,34 +282,41 @@
      const maxBarWeight = 200;
      const actualBarStartXPos = 75;
      const actualBarStartYPos = 20;
-    //  const temp = d3.nest()
-    //                 .key((d) => d.parent)
-    //                 .rollup((leaves) => leaves.length)
-    //                 .map(dataSet);
-    //  console.log(temp);
-     const dataBar = [
-       {
-         skill: 'ETL',
-         amount: 3,
-       }, {
-         skill: 'Machine Learning',
-         amount: 4,
-       }, {
-         skill: 'Data Mining',
-         amount: 5,
-       }, {
-         skill: 'Data Viz Interact',
-         amount: 5,
-       }, {
-         skill: 'Big Data',
-         amount: 3,
-       }, {
-         skill: 'Cloud Server',
-         amount: 1,
-       }, {
-         skill: 'Database',
-         amount: 7,
-       }];
+     // nest with skill name
+     const skillNumberMap = d3.nest()
+        .key((d) => d.parent)
+        .rollup((leaves) => leaves.length)
+        .entries(dataSetReformat);
+     // calculate the bar data with skill and amount
+     const dataBar = skillNumberMap.map((d) => {
+       const skill = {};
+       skill.skill = d.key;
+       skill.amount = d.value;
+       return skill;
+     });
+    //  const dataBar = [
+    //    {
+    //      skill: 'ETL',
+    //      amount: 3,
+    //    }, {
+    //      skill: 'Machine Learning',
+    //      amount: 4,
+    //    }, {
+    //      skill: 'Data Mining',
+    //      amount: 5,
+    //    }, {
+    //      skill: 'Data Viz Interact',
+    //      amount: 5,
+    //    }, {
+    //      skill: 'Big Data',
+    //      amount: 3,
+    //    }, {
+    //      skill: 'Cloud Server',
+    //      amount: 1,
+    //    }, {
+    //      skill: 'Database',
+    //      amount: 7,
+    //    }];
 
      // sort dataBar by amount
      dataBar.sort((x, y) => y.amount - x.amount);
@@ -435,11 +338,6 @@
      const barBody = d3.select(`.${styles.barBody}`)
          .attr('width', '300px')
          .attr('height', '330px');
-     // set and transform the start point positation
-    //  const barXPos = 1000;
-    //  const barYPos = 300;
-    //  barBody.attr('transform',
-    //      `translate(${barXPos}, 0)`);
      // create the single bar cotainer
      const barWrapper = barBody.selectAll('g')
          .data(dataBar)
@@ -449,22 +347,47 @@
          .attr('transform',
                (d, i) => (`translate(${actualBarStartXPos} ,${actualBarStartYPos + (barBackgroundHeight * i)})`),
          )
-         .on('mouseover', () => {
-           // console.log(this);
-             // RadarChart.drawLine(RadarChart.getRadarDataUsingSubcategory(d.skill));
-           // d3.select(this)
-           //     .select('.barRect')
-           //     .transition()
-           //     .duration(300)
-           //     .style('fill', 'rgb(229,190,157)');
+         .on('mouseover', (d) => {
+           const parseDate = d3.timeParse('%Y-%m');
+           const upperContainer = d3.select(`.${styles.scatterChart}`);
+           const xScaleInside = d3.scaleTime().range([150, 1200]);
+           const yScaleInside = d3.scaleLinear().range([300, 50]);
+           //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+           xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
+           yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
+           const centreX = 350;
+           const centreY = 500;
+           const centreR = 10;
+           const a = upperContainer.selectAll('circle')
+            .data(this.circlePositionCal(dataSetReformat, d.skill), (f) => `${f.skill}-${f.time}`);
+           a.transition()
+            .duration(1500)
+           // .attr('cx', 365)
+            .attr('cx', (f) => (centreX + (Math.sin(f.angle) * centreR)))
+           // .attr('cy', 500);
+            .attr('cy', (f) => (centreY - (Math.cos(f.angle) * centreR)));
+           a.transition()
+            .duration(1000)
+            .delay(1500)
+           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
+            .attr('cx', (f) => (centreX + (Math.sin(f.angle) * (centreR + (f.order * 20)))))
+           //  .attr('cy', 500);
+           .attr('cy', (f) => (centreY - (Math.cos(f.angle) * (centreR + (f.order * 20)))));
          })
          .on('mouseout', () => {
-             // RadarChart.drawLine(allSubcategoryData);
-           // d3.select(this)
-           //     .select('.barRect')
-           //     .transition()
-           //     .duration(300)
-           //     .style('fill', 'rgb(218, 103, 97)');
+           const parseDate = d3.timeParse('%Y-%m');
+           const upperContainer = d3.select(`.${styles.scatterChart}`);
+           const xScaleInside = d3.scaleTime().range([150, 1200]);
+           const yScaleInside = d3.scaleLinear().range([300, 50]);
+           //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+           xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
+           yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
+           const a = upperContainer.selectAll('circle')
+            .data(dataSetReformat, (f) => `${f.skill}-${f.time}`);
+           a.transition()
+             .duration(1000)
+             .attr('cx', (f) => xScaleInside(f.time))
+             .attr('cy', (f) => yScaleInside(f.proficiency));
          });
      // add background for bar
      barWrapper.append('rect')
@@ -510,12 +433,6 @@
    render() {
      return (
        <div id={'viz'}>
-         <div id={'Database'}>
-           <button>Database</button>
-         </div>
-         <div id={'ETL'}>
-           <button>ETL</button>
-         </div>
          <svg id={'vizSvg'}>
            <g className={styles.upperContainer}>
              <g className={styles.timeLine} />

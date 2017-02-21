@@ -32,9 +32,9 @@
   fill: rgb(218, 103, 97);
 }
 
-.barRect:hover {
+/*.barRect:hover {
   fill: rgb(229, 190, 157);
-}
+}*/
 
 .barLabels {
   text-anchor: end;
@@ -53,7 +53,7 @@
 }
 
 .line {
-  stroke-width:2;
+  stroke-width: 2;
 }
 
 .upperYAxis path {

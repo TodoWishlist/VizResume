@@ -180,5 +180,117 @@
     "time": "2016-01",
     "proficiency": 60,
     "EOrW": "Work"
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2014-08",
+    "proficiency": 60,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2014-10",
+    "proficiency": 70,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2015-10",
+    "proficiency": 85,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2016-10",
+    "proficiency": 85,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2017-02",
+    "proficiency": 95,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Tableau",
+    "parent": "Data viz interact",
+    "time": "2015-10",
+    "proficiency": 60,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "HTML",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 70,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "HTML",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "CSS",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 40,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "CSS",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Javascript",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 60,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Javascript",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Hive",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 60,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "Spark",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 50,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "Pig",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 40,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "AWS",
+    "parent": "Cloud server",
+    "time": "2014-07",
+    "proficiency": 70,
+    "EOrW": "Edu"
   }
 ]
