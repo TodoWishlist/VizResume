@@ -42,63 +42,240 @@
    viz = (dataSet) => {
      const allCategoryValue = [4.6, 2, 4];
      allCategoryValue.push(allCategoryValue[0]);
-     //
-    //  this.radarChartDrawBase(allCategoryValue);
-    //  this.radarChartDrawLine([['a', 'b', 'c'], allCategoryValue]);
-     this.barChart(dataSet);
-     this.scatterChart(dataSet);
+     const dataSetReformat = this.dataInit(dataSet);
+     this.barChart(dataSetReformat);
+     this.scatterChart(dataSetReformat);
      this.sunChart();
      this.timeLine();
+     this.testDatabase(dataSetReformat);
+     this.testETL(dataSetReformat);
    };
-
-   scatterChart = (dataSet) => {
+   testDatabase = (dataSetReformat) => {
+     d3.select('#Database')
+        .on('click', () => {
+          const parseDate = d3.timeParse('%Y-%m');
+          const upperContainer = d3.select(`.${styles.scatterChart}`);
+          const xScale = d3.scaleTime().range([150, 1200]);
+          const yScale = d3.scaleLinear().range([300, 50]);
+         //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+          xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
+          yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
+          const centreX = 350;
+          const centreY = 500;
+          const centreR = 10;
+          const a = upperContainer.selectAll('circle')
+           .data(this.circlePositionCal(dataSetReformat, 'Database'), (d) => `${d.skill}-${d.time}`);
+          a.transition()
+           .duration(2000)
+           // .attr('cx', 365)
+           .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
+           // .attr('cy', 500);
+           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
+          a.transition()
+            .duration(2000)
+            .delay(2000)
+           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
+            .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
+           //  .attr('cy', 500);
+           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
+          a.transition()
+           .duration(2000)
+           .delay(4000)
+           .attr('cx', (d) => xScale(d.time))
+           .attr('cy', (d) => yScale(d.proficiency));
+        });
+   }
+   testETL = (dataSetReformat) => {
+     d3.select('#ETL')
+        .on('click', () => {
+          const parseDate = d3.timeParse('%Y-%m');
+          const upperContainer = d3.select(`.${styles.scatterChart}`);
+          const xScale = d3.scaleTime().range([150, 1200]);
+          const yScale = d3.scaleLinear().range([300, 50]);
+         //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+          xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
+          yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
+          const centreX = 350;
+          const centreY = 500;
+          const centreR = 10;
+          const a = upperContainer.selectAll('circle')
+           .data(this.circlePositionCal(dataSetReformat, 'ETL'), (d) => `${d.skill}-${d.time}`);
+          a.transition()
+           .duration(2000)
+           // .attr('cx', 365)
+           .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
+           // .attr('cy', 500);
+           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
+          a.transition()
+            .duration(2000)
+            .delay(2000)
+           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
+            .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
+           //  .attr('cy', 500);
+           .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
+          a.transition()
+           .duration(2000)
+           .delay(4000)
+           .attr('cx', (d) => xScale(d.time))
+           .attr('cy', (d) => yScale(d.proficiency));
+        });
+   }
+   // reformat the time
+   dataInit = (dataSet) => {
      const parseDate = d3.timeParse('%Y-%m');
      const dataSetReformat = dataSet.map((d) => {
        const rObj = Object.assign({}, d);
        rObj.time = parseDate(rObj.time);
        return rObj;
      });
+     return dataSetReformat;
+   }
+   circlePositionCal = (inputData, category) => {
+     inputData.sort((a, b) => {
+       const keyA = a.time;
+       const keyB = b.time;
+       if (keyA < keyB) return -1;
+       if (keyA > keyB) return 1;
+       return 0;
+     });
+     // unique function
+     function unique(arr) {
+       return arr.filter((x, i) => arr.indexOf(x) === i);
+     }
+     const skillArray = unique(inputData.filter((d) => d.parent === category).map((d) => d.skill))
+                        .sort();
+     const n = skillArray.length;
+     const angleArray = [];
+     if (n % 2 === 0) {
+       // even number
+       const l = (2 * Math.PI) / ((n + 2) * 2);
+       const b = (n + 2) / 2;
+       for (let i = -b; i < b; i += 1) {
+         const angle = ((2 * i) + 1) * l;
+         angleArray.push(angle);
+       }
+     } else {
+       // odd number
+       const l = (2 * Math.PI) / (n + 2);
+       const b = ((n + 2) - 1) / 2;
+       for (let i = -b; i <= b; i += 1) {
+         const angle = i * l;
+         angleArray.push(angle);
+       }
+     }
+    //  console.log(angleArray.map((d) => ((d / (2 * Math.PI)) * 360)));
+     const angleArrayMin2Line = angleArray.slice(1, n + 1);
+     // create a map which map from skill name to skill angle
+     const skillAngleMap = {};
+     for (let i = 0; i < n; i += 1) {
+       skillAngleMap[skillArray[i]] = angleArrayMin2Line[i];
+     }
+     // polar line
+     const sunChart = d3.select(`.${styles.sunContainer}`);
+     const sunPolar = sunChart.selectAll('line')
+      .data(angleArray, (d) => `line-${d}`);
+    // Enter sunPolar
+     sunPolar.enter()
+      .append('line')
+      .attr('class', (d) => `line-${d}`)
+      .attr('x1', 350)
+      .attr('y1', 200)
+      .attr('x2', 500)
+      .attr('y2', 200)
+      // .attr('transform', (d) => `rotate(${(d / (2 * Math.PI)) * 360}, 350, 200)`)
+      .attr('transform', (d) => `rotate(${((d / (2 * Math.PI)) * 360) - 90}, 350, 200)`)
+      .attr('stroke', '#8d8482')
+      .attr('stroke-opacity', 0.3);
+      // Update sunPolar
+     sunPolar.transition()
+      .duration(1000)
+      .delay(200)
+      .attr('transform', (d) => `rotate(${((d / (2 * Math.PI)) * 360) - 90}, 350, 200)`);
+      // Exit sunPolar
+     sunPolar.exit().remove();
+    //  console.log(inputData);
+    // create the result object including order number
+     const skillFreq = {};
+     const result = inputData.filter((d) => d.parent === category).map((d) => {
+       const rObj = Object.assign({}, d);
+       rObj.angle = skillAngleMap[d.skill];
+       if (skillFreq[d.skill]) {
+         skillFreq[d.skill] += 1;
+       } else {
+         skillFreq[d.skill] = 1;
+       }
+       rObj.order = skillFreq[d.skill];
+       return rObj;
+     });
+     return result;
+   }
+
+   scatterChart = (dataSetReformat) => {
+     const parseDate = d3.timeParse('%Y-%m');
+    //  const dataSetReformat = dataSet.map((d) => {
+    //    const rObj = Object.assign({}, d);
+    //    rObj.time = parseDate(rObj.time);
+    //    return rObj;
+    //  });
+    //  console.log(this.circlePositionCal(dataSetReformat));
      const upperContainer = d3.select(`.${styles.scatterChart}`);
      const xScale = d3.scaleTime().range([150, 1200]);
      const yScale = d3.scaleLinear().range([300, 50]);
+     const rScale = d3.scaleLinear().range([3, 10]);
     //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
      xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
-     upperContainer.selectAll('dot')
-                    .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
-                    .enter().append('circle')
-                    .attr('class', (d) => `${d.skill}-${d.time}`)
-                    .attr('r', 5)
-                    .attr('cx', (d) => xScale(d.time))
-                    .attr('cy', (d) => yScale(d.proficiency))
-                    .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+     rScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
+
+     upperContainer.selectAll('circle')
+      .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
+      .enter().append('circle')
+      .attr('class', (d) => `${d.skill}-${d.time}`)
+      .attr('r', (d) => rScale(d.proficiency))
+      .attr('cx', (d) => xScale(d.time))
+      .attr('cy', (d) => yScale(d.proficiency))
+      .attr('fill', (d) => (d.EOrW === 'Edu' ? 'steelblue' : '#c15f56'))
+      .attr('fill-opacity', 0.5);
     // add x Axis
-     upperContainer.append('g')
+     upperContainer.selectAll('g')
+      .data(['xAxis'], (d) => d)
+      .enter()
+      .append('g')
       .attr('class', styles.upperXAxis)
       .attr('transform', 'translate(0, 30)')
       .call(d3.axisTop(xScale).ticks(4));
     // add y Axis
-     upperContainer.append('g')
+     upperContainer.selectAll('g')
+      .data(['yAxis'], (d) => d)
+      .enter()
+      .append('g')
       .attr('class', styles.upperYAxis)
       .attr('transform', 'translate(100, 0)')
         .call(d3.axisLeft(yScale).ticks(3));
 
-     const a = upperContainer.selectAll('circle')
-                  .data(dataSetReformat, (d) => `${d.skill}-${d.time}`);
-     a.transition()
-      .duration(2000)
-      .attr('cx', 365)
-      .attr('cy', 500);
-     a.transition()
-       .duration(2000)
-       .delay(2000)
-       .attr('cx', (d, i) => `${365 + (i * 10)}`)
-       .attr('cy', 500);
-     a.transition()
-      .duration(2000)
-      .delay(4000)
-      .attr('cx', (d) => xScale(d.time))
-      .attr('cy', (d) => yScale(d.proficiency));
+    //  const centreX = 350;
+    //  const centreY = 500;
+    //  const centreR = 10;
+    //  const a = upperContainer.selectAll('circle')
+    //   .data(this.circlePositionCal(dataSetReformat), (d) => `${d.skill}-${d.time}`);
+    //  a.transition()
+    //   .duration(2000)
+    //   // .attr('cx', 365)
+    //   .attr('cx', (d) => (centreX + (Math.sin(d.angle) * centreR)))
+    //   // .attr('cy', 500);
+    //   .attr('cy', (d) => (centreY - (Math.cos(d.angle) * centreR)));
+    //  a.transition()
+    //    .duration(2000)
+    //    .delay(2000)
+    //   //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
+    //    .attr('cx', (d) => (centreX + (Math.sin(d.angle) * (centreR + (d.order * 20)))))
+    //   //  .attr('cy', 500);
+    //   .attr('cy', (d) => (centreY - (Math.cos(d.angle) * (centreR + (d.order * 20)))));
+    //  a.transition()
+    //   .duration(2000)
+    //   .delay(4000)
+    //   .attr('cx', (d) => xScale(d.time))
+    //   .attr('cy', (d) => yScale(d.proficiency));
    }
 
    timeLine = () => {
@@ -158,12 +335,13 @@
       .attr('y1', (d) => yScale(d.EOrW))
       .attr('x2', (d) => xScale(d.end))
       .attr('y2', (d) => yScale(d.EOrW))
-      .style('stroke', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
+      .style('stroke', (d) => (d.EOrW === 'Edu' ? 'steelblue' : '#c15f56'));
 
      timeLine.selectAll('circle.start')
        .data(dataTimeLineReformat, (d) => `${d.name}-${d.start}`)
        .enter()
        .append('circle')
+       .attr('class', 'start')
        .attr('cx', (d) => xScale(d.start))
        .attr('cy', (d) => yScale(d.EOrW))
        .attr('r', 3)
@@ -173,13 +351,14 @@
          .data(dataTimeLineReformat, (d) => `${d.name}-${d.end}`)
          .enter()
          .append('circle')
+         .attr('class', 'end')
          .attr('cx', (d) => xScale(d.end))
          .attr('cy', (d) => yScale(d.EOrW))
          .attr('r', 3)
          .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
 
      timeLine.selectAll('text')
-        .data(dataTimeLineReformat, String)
+        .data(dataTimeLineReformat, (d) => `${d.name}`)
         .enter()
         .append('text')
         .attr('class', styles.timeLineText)
@@ -195,7 +374,7 @@
      sunChart.append('circle')
       .attr('cx', 350)
       .attr('cy', 200)
-      .attr('r', 10)
+      .attr('r', 3)
       .attr('fill', '#8d8482');
    }
 
@@ -207,11 +386,11 @@
      const maxBarWeight = 200;
      const actualBarStartXPos = 75;
      const actualBarStartYPos = 20;
-     const temp = d3.nest()
-                    .key((d) => d.parent)
-                    .rollup((leaves) => leaves.length)
-                    .map(dataSet);
-     console.log(temp);
+    //  const temp = d3.nest()
+    //                 .key((d) => d.parent)
+    //                 .rollup((leaves) => leaves.length)
+    //                 .map(dataSet);
+    //  console.log(temp);
      const dataBar = [
        {
          skill: 'ETL',
@@ -331,6 +510,12 @@
    render() {
      return (
        <div id={'viz'}>
+         <div id={'Database'}>
+           <button>Database</button>
+         </div>
+         <div id={'ETL'}>
+           <button>ETL</button>
+         </div>
          <svg id={'vizSvg'}>
            <g className={styles.upperContainer}>
              <g className={styles.timeLine} />

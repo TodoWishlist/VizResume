@@ -30,15 +30,57 @@
   {
     "skill": "SQL",
     "parent": "Database",
-    "time": "2008-05",
+    "time": "2007-05",
     "proficiency": 50,
     "EOrW": "Edu"
   },
   {
     "skill": "SQL",
     "parent": "Database",
-    "time": "2012-06",
+    "time": "2009-06",
+    "proficiency": 70,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2010-05",
     "proficiency": 80,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2011-06",
+    "proficiency": 80,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2012-05",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2015-06",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2016-05",
+    "proficiency": 85,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2017-02",
+    "proficiency": 90,
     "EOrW": "Work"
   },
   {
@@ -65,8 +107,15 @@
   {
     "skill": "SQL Server",
     "parent": "Database",
-    "time": "2016-08",
+    "time": "2011-08",
     "proficiency": 50,
+    "EOrW": "Edu"
+  },
+  {
+    "skill": "SQL Server",
+    "parent": "Database",
+    "time": "2016-08",
+    "proficiency": 80,
     "EOrW": "Work"
   },
   {
@@ -74,6 +123,62 @@
     "parent": "Database",
     "time": "2012-01",
     "proficiency": 30,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2012-01",
+    "proficiency": 50,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2015-01",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2016-03",
+    "proficiency": 90,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2014-06",
+    "proficiency": 30,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2015-05",
+    "proficiency": 60,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2016-05",
+    "proficiency": 80,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "BeautifulSoup",
+    "parent": "ETL",
+    "time": "2014-01",
+    "proficiency": 30,
+    "EOrW": "Work"
+  },
+  {
+    "skill": "BeautifulSoup",
+    "parent": "ETL",
+    "time": "2016-01",
+    "proficiency": 60,
     "EOrW": "Work"
   }
 ]
