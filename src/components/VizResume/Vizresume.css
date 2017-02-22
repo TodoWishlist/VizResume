@@ -32,9 +32,9 @@
   fill: rgb(218, 103, 97);
 }
 
-/*.barRect:hover {
+.barRectClick {
   fill: rgb(229, 190, 157);
-}*/
+}
 
 .barLabels {
   text-anchor: end;

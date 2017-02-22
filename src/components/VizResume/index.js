@@ -19,6 +19,11 @@
      data: PropTypes.any,
    }
 
+   constructor(props) {
+     super(props);
+     this.state = {};
+   }
+
    componentDidMount() {
     //  console.log(data);
      this.init();
@@ -267,7 +272,11 @@
 
    sunChart = () => {
      const sunChart = d3.select(`.${styles.sunContainer}`);
-     sunChart.append('circle')
+     sunChart.selectAll('.sunChartCenter')
+      .data(['sunChartCenter'], (d) => d)
+      .enter()
+      .append('circle')
+      .attr('class', 'sunChartCenter')
       .attr('cx', 350)
       .attr('cy', 200)
       .attr('r', 3)
@@ -285,7 +294,13 @@
      // nest with skill name
      const skillNumberMap = d3.nest()
         .key((d) => d.parent)
-        .rollup((leaves) => leaves.length)
+        .rollup((leaves) => {
+          const map = new Map();
+          leaves.forEach(leave => {
+            map.set(leave.skill, leave.skill);
+          });
+          return map.size;
+        })
         .entries(dataSetReformat);
      // calculate the bar data with skill and amount
      const dataBar = skillNumberMap.map((d) => {
@@ -340,54 +355,83 @@
          .attr('height', '330px');
      // create the single bar cotainer
      const barWrapper = barBody.selectAll('g')
-         .data(dataBar)
+         .data(dataBar, (d) => d.skill)
          .enter()
          .append('g')
          .attr('class', 'barWrapper')
          .attr('transform',
                (d, i) => (`translate(${actualBarStartXPos} ,${actualBarStartYPos + (barBackgroundHeight * i)})`),
          )
-         .on('mouseover', (d) => {
-           const parseDate = d3.timeParse('%Y-%m');
-           const upperContainer = d3.select(`.${styles.scatterChart}`);
-           const xScaleInside = d3.scaleTime().range([150, 1200]);
-           const yScaleInside = d3.scaleLinear().range([300, 50]);
-           //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-           xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
-           yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
-           const centreX = 350;
-           const centreY = 500;
-           const centreR = 10;
-           const a = upperContainer.selectAll('circle')
-            .data(this.circlePositionCal(dataSetReformat, d.skill), (f) => `${f.skill}-${f.time}`);
-           a.transition()
-            .duration(1500)
-           // .attr('cx', 365)
-            .attr('cx', (f) => (centreX + (Math.sin(f.angle) * centreR)))
-           // .attr('cy', 500);
-            .attr('cy', (f) => (centreY - (Math.cos(f.angle) * centreR)));
-           a.transition()
-            .duration(1000)
-            .delay(1500)
-           //  .attr('cx', (d, i) => `${365 + (i * 20)}`)
-            .attr('cx', (f) => (centreX + (Math.sin(f.angle) * (centreR + (f.order * 20)))))
-           //  .attr('cy', 500);
-           .attr('cy', (f) => (centreY - (Math.cos(f.angle) * (centreR + (f.order * 20)))));
+         .on('mouseover', () => {
          })
          .on('mouseout', () => {
-           const parseDate = d3.timeParse('%Y-%m');
-           const upperContainer = d3.select(`.${styles.scatterChart}`);
-           const xScaleInside = d3.scaleTime().range([150, 1200]);
-           const yScaleInside = d3.scaleLinear().range([300, 50]);
-           //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-           xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
-           yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
-           const a = upperContainer.selectAll('circle')
-            .data(dataSetReformat, (f) => `${f.skill}-${f.time}`);
-           a.transition()
-             .duration(1000)
-             .attr('cx', (f) => xScaleInside(f.time))
-             .attr('cy', (f) => yScaleInside(f.proficiency));
+         })
+         .on('click', (d) => {
+           // if first time click or unclick before
+           if (this.state[d.skill] === undefined || this.state[d.skill] === -1) {
+             // mark this skill has been selected
+             this.setState({ [d.skill]: 1 });
+             // before change color, we make all color back to the default
+             d3.selectAll('.barRect')
+              .attr('fill', 'rgb(218, 103, 97)');
+             // back to default position on the scatterChart
+             const parseDate = d3.timeParse('%Y-%m');
+             const upperContainer = d3.select(`.${styles.scatterChart}`);
+             const xScaleInside = d3.scaleTime().range([150, 1200]);
+             const yScaleInside = d3.scaleLinear().range([300, 50]);
+             xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
+             yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
+             // select all circle and bind the data
+             const allCirclePre = upperContainer.selectAll('circle')
+              .data(dataSetReformat, (f) => `${f.skill}-${f.time}`);
+             // transition all circle to default position
+             allCirclePre.transition()
+               .duration(1000)
+               .attr('cx', (f) => xScaleInside(f.time))
+               .attr('cy', (f) => yScaleInside(f.proficiency));
+             // transition seleted circle to sunChart
+             const centreX = 350;
+             const centreY = 500;
+             const centreR = 10;
+             // select all circle again
+             const allCircleAfter = upperContainer.selectAll('circle')
+              .data(this.circlePositionCal(dataSetReformat, d.skill), (f) => `${f.skill}-${f.time}`);
+             // transition selected circle to centre
+             allCircleAfter.transition()
+              .duration(1500)
+              .attr('cx', (f) => (centreX + (Math.sin(f.angle) * centreR)))
+              .attr('cy', (f) => (centreY - (Math.cos(f.angle) * centreR)));
+             // transition selected circle to outside to sunChart
+             allCircleAfter.transition()
+              .duration(1000)
+              .delay(1500)
+              .attr('cx', (f) => (centreX + (Math.sin(f.angle) * (centreR + (f.order * 20)))))
+              .attr('cy', (f) => (centreY - (Math.cos(f.angle) * (centreR + (f.order * 20)))));
+            // change color after click
+             d3.selectAll(`#${d.skill.replace(/ /g, '-')}-barRect`)
+              .attr('fill', 'rgb(229, 190, 157)');
+            // console.log(d3.selectAll('.barRect'));
+           } else {
+             // mark this skill has not been selected
+             this.setState({ [d.skill]: -1 });
+             // we make all color back to the default
+             d3.selectAll('.barRect')
+              .attr('fill', 'rgb(218, 103, 97)');
+             // back to default position on the scatterChart
+             const parseDate = d3.timeParse('%Y-%m');
+             const upperContainer = d3.select(`.${styles.scatterChart}`);
+             const xScaleInside = d3.scaleTime().range([150, 1200]);
+             const yScaleInside = d3.scaleLinear().range([300, 50]);
+             //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
+             xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
+             yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
+             const allCircleAfter = upperContainer.selectAll('circle')
+              .data(dataSetReformat, (f) => `${f.skill}-${f.time}`);
+             allCircleAfter.transition()
+               .duration(1000)
+               .attr('cx', (f) => xScaleInside(f.time))
+               .attr('cy', (f) => yScaleInside(f.proficiency));
+           }
          });
      // add background for bar
      barWrapper.append('rect')
@@ -398,9 +442,11 @@
          .style('fill', 'white');
      // add actual bar
      barWrapper.append('rect')
-         .attr('class', styles.barRect)
+         .attr('class', 'barRect')
+         .attr('id', (d) => `${d.skill.replace(/ /g, '-')}-barRect`)
          .attr('width', (d) => barScale(d.amount))
-         .attr('height', barHeight);
+         .attr('height', barHeight)
+         .attr('fill', 'rgb(218, 103, 97)');
          // .style('fill', 'rgb(218, 103, 97)');
      // console.log(d3.select(`.${styles.barRect}`));
      // add bar labels
@@ -411,11 +457,13 @@
          .text((d) => d.skill);
 
      // create title
-     barBody.append('g')
-         .append('text')
-         .attr('class', styles.barTitle)
-         .attr('transform', 'translate(175, 5)')
-         .text('Quantity - Skills number in each Subcategory');
+     barBody.selectAll('text')
+      .data(['barTitle'], (d) => d)
+      .enter()
+      .append('text')
+      .attr('class', styles.barTitle)
+      .attr('transform', 'translate(175, 5)')
+      .text('Quantity - Skills number in each Subcategory');
 
        // create the x axis container
      const vizBarAxis = d3.select(`.${styles.barAxis}`);
@@ -425,9 +473,12 @@
      const barAxisYPos = actualBarStartYPos + (barBackgroundHeight * allAmountLength);
      vizBarAxis.attr('transform', `translate(${barAxisXPos} ,${barAxisYPos})`);
      // call xAxis
-     vizBarAxis.append('g')
-         .attr('class', 'xAxis')
-         .call(xAxis);
+     vizBarAxis.selectAll('g')
+      .data(['xAxis'], (d) => d)
+      .enter()
+      .append('g')
+      .attr('class', 'xAxis')
+        .call(xAxis);
    }
 
    render() {
