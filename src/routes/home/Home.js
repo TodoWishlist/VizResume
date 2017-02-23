@@ -7,6 +7,7 @@ import Vizresume from '../../components/VizResume';
 import HomeStory from './HomeStory/HomeStory';
 import HomeBottomSignup from './HomeBottomSignup/HomeBottomSignup';
 import Demo from './Demo/Demo';
+import ModalExample from '../../components/Email/Email';
 
 class Home extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Home extends Component {
         <Demo />
         <HomeStory />
         <HomeBottomSignup />
+        <ModalExample />
       </div>
     );
   }
