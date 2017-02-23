@@ -13,8 +13,8 @@ class FooterNavs extends Component {
   componentWillMount() {
     this.setState({ dataSet:
     [
-        { name: 'Company', list: [{ name: 'About us', url: '/aboutus' }, { name: 'Jobs', url: '/jobs' }, { name: 'Blog', url: '/blog' }] },
-        { name: 'Support', list: [{ name: 'Help Center', url: '/helpcenter' }, { name: 'Contact us', url: '/cotactus' }] },
+        { name: 'Company', list: [{ name: 'About us', url: '/about' }, { name: 'Jobs', url: '/jobs' }, { name: 'Blog', url: '/blog' }] },
+        { name: 'Support', list: [{ name: 'Help Center', url: '/helpcenter' }, { name: 'Contact us', url: '/contact' }] },
         { name: 'Connect', list: [{ name: 'Twitter', url: 'www.twitter.com' }, { name: 'Facebook', url: 'www.facebook.com' }, { name: 'Linkedin', url: 'www.linkedin.com' }, { name: 'Google+', url: 'www.google.com' }] },
     ],
     },

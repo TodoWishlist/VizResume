@@ -38,7 +38,7 @@ class Header extends Component {
                 <NavLink href="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/example">Marketplace</NavLink>
+                <NavLink href="/example">example</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink onClick={this.signinToggle}>Log In</NavLink>
