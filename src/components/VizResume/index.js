@@ -22,7 +22,6 @@
    constructor(props) {
      super(props);
      this.state = {
-       map: {},
        pre: '',
      };
    }
@@ -141,6 +140,30 @@
      });
      return result;
    }
+   // show the tooltip
+   showTooltip = (d) => {
+     // get current mouse position
+     const xPos = d3.event.pageX - 15;
+     const yPos = d3.event.pageY - 15;
+     // create container for tooltip
+     d3.select(`.${styles.tooltipTime}`).text(`${d.time.getFullYear()}-${d.time.getMonth() + 1}`);
+     d3.select(`.${styles.tooltipSkill}`).text(d.skill);
+     d3.select(`.${styles.tooltipEorwname}`).text(d.EOrWName).style('color', d.EOrW === 'Edu' ? 'steelblue' : '#c15f56');
+     d3.select(`.${styles.tooltipShortdescription}`).text(d.ShortDes);
+     // transform the tooltip to correct position
+     d3.select(`.${styles.tooltip}`)
+      .style('top', `${yPos}px`)
+      .style('left', `${xPos}px`)
+      .transition()
+      .duration(0)
+      .style('opacity', 1);
+   }
+   // hide the tooltip
+   hideTooltip = () => {
+     d3.select(`.${styles.tooltip}`)
+       .transition().duration(100)
+       .style('opacity', 0);
+   }
 
    scatterChart = (dataSetReformat) => {
      const parseDate = d3.timeParse('%Y-%m');
@@ -152,7 +175,7 @@
      xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      rScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
-
+     // add circle
      upperContainer.selectAll('circle')
       .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
       .enter().append('circle')
@@ -161,7 +184,9 @@
       .attr('cx', (d) => xScale(d.time))
       .attr('cy', (d) => yScale(d.proficiency))
       .attr('fill', (d) => (d.EOrW === 'Edu' ? 'steelblue' : '#c15f56'))
-      .attr('fill-opacity', 0.5);
+      .attr('fill-opacity', 0.5)
+      .on('mouseover', (d) => this.showTooltip(d))
+      .on('mouseout', () => this.hideTooltip());
     // add x Axis
      upperContainer.selectAll('g')
       .data(['xAxis'], (d) => d)
@@ -479,6 +504,17 @@
              </g>
            </g>
          </svg>
+         <div className={styles.tooltip}>
+           <div className={styles.tooltipContainer}>
+             <div className={styles.tooltipContainerUpper}>
+               <div className={styles.tooltipTime} />
+               <div className={styles.tooltipSkill} />
+             </div>
+             <div className={styles.tooltipRule} />
+             <div className={styles.tooltipEorwname} />
+             <div className={styles.tooltipShortdescription} />
+           </div>
+         </div>
        </div>
      );
    }
