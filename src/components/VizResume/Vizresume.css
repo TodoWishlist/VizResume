@@ -28,14 +28,6 @@
 .barAxis {
 }
 
-.barRect {
-  fill: rgb(218, 103, 97);
-}
-
-.barRectClick {
-  fill: rgb(229, 190, 157);
-}
-
 .barLabels {
   text-anchor: end;
   font-size: 10px;

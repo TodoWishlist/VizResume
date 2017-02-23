@@ -16,10 +16,9 @@
 
 /* begin: title and sub title */
 .header1 {
+  font-family: 'webfont', Helvetica, Arial, sans-serif;
   font-size: 38px;
-  font-size: 2.375rem;
   line-height: 48px;
-  line-height: 3rem;
   text-align: center;
   color: #47525d;
   -webkit-font-smoothing: antialiased;
@@ -29,9 +28,7 @@
 .subCopy {
   font-family: 'webfont', Helvetica, Arial, sans-serif;
   font-size: 20px;
-  font-size: 1.25rem;
   line-height: 30px;
-  line-height: 1.875rem;
   text-align: center;
   color: #47525d;
   -webkit-font-smoothing: antialiased;

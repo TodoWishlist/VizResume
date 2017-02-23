@@ -21,7 +21,10 @@
 
    constructor(props) {
      super(props);
-     this.state = {};
+     this.state = {
+       map: {},
+       pre: '',
+     };
    }
 
    componentDidMount() {
@@ -43,8 +46,6 @@
 
    // add viz function
    viz = (dataSet) => {
-     const allCategoryValue = [4.6, 2, 4];
-     allCategoryValue.push(allCategoryValue[0]);
      const dataSetReformat = this.dataInit(dataSet);
      this.barChart(dataSetReformat);
      this.scatterChart(dataSetReformat);
@@ -309,29 +310,6 @@
        skill.amount = d.value;
        return skill;
      });
-    //  const dataBar = [
-    //    {
-    //      skill: 'ETL',
-    //      amount: 3,
-    //    }, {
-    //      skill: 'Machine Learning',
-    //      amount: 4,
-    //    }, {
-    //      skill: 'Data Mining',
-    //      amount: 5,
-    //    }, {
-    //      skill: 'Data Viz Interact',
-    //      amount: 5,
-    //    }, {
-    //      skill: 'Big Data',
-    //      amount: 3,
-    //    }, {
-    //      skill: 'Cloud Server',
-    //      amount: 1,
-    //    }, {
-    //      skill: 'Database',
-    //      amount: 7,
-    //    }];
 
      // sort dataBar by amount
      dataBar.sort((x, y) => y.amount - x.amount);
@@ -371,6 +349,10 @@
            if (this.state[d.skill] === undefined || this.state[d.skill] === -1) {
              // mark this skill has been selected
              this.setState({ [d.skill]: 1 });
+             // mark pre selected skill to unselected
+             this.setState({ [this.state.pre]: -1 });
+             // mark this selected skill to be a pre selected skill
+             this.setState({ pre: d.skill });
              // before change color, we make all color back to the default
              d3.selectAll('.barRect')
               .attr('fill', 'rgb(218, 103, 97)');

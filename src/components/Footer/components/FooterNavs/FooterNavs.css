@@ -1,0 +1,22 @@
+.FooterNavWrapper {
+  border-bottom: 1px solid #d0d4d9;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 11px;
+}
+
+.FooterNavSection {
+  flex: 1;
+  max-width: 150px;
+  margin: 0 auto;
+}
+
+.Links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.href {
+  color: #7b8994;
+}
