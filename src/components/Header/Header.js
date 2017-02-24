@@ -28,20 +28,29 @@ class Header extends Component {
   }
   render() {
     return (
-      <header>
-        <Navbar color="faded" light toggleable>
+      <header className={styles.header}>
+        <Navbar light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/" style={{ color: '#d85f5f' }}>&#9774; Viz u resume</NavbarBrand>
+          <NavbarBrand className={styles.brand} href="/">vizume</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/">Home</NavLink>
+                <NavLink href="/">HOME</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/example">example</NavLink>
+                <NavLink href="/">PROCESS</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={this.signinToggle}>Log In</NavLink>
+                <NavLink href="/example">EXAMPLE</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/">CONTACT</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/">SIGN UP</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink onClick={this.signinToggle}>LOG IN</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

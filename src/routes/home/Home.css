@@ -1,14 +1,3 @@
 .supremeContainer {
   width: 100%;
 }
-
-.header {
-  color: #47525d;
-  font-size: 48px;
-  font-weight: 600;
-  max-width: 100%;
-  text-align: center;
-  padding-top: 160px;
-  padding-bottom: 100px;
-  background-color: #f6f9fc;
-}

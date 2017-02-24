@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Home.css';
-
-import HomeHero from './HomeHero/HomeHero';
+import HomeAbstract from './HomeAbstract/HomeAbstract';
+// import HomeHero from './HomeHero/HomeHero';
+import Vizresume from '../../components/VizResume';
 import HomeStory from './HomeStory/HomeStory';
 import HomeBottomSignup from './HomeBottomSignup/HomeBottomSignup';
 import Demo from './Demo/Demo';
@@ -18,8 +19,7 @@ class Home extends Component {
   render() {
     return (
       <div className={styles.supremeContainer}>
-        <h1 className={styles.header}>Viz u resume</h1>
-        <HomeHero />
+        <HomeAbstract />
         <Demo />
         <HomeStory />
         <HomeBottomSignup />

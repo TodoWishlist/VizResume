@@ -1,11 +1,19 @@
-/* .header {
-  background: #f5b335;
+ .header {
+  /*background: #f5b335;
   height: 40px;
   position: fixed;
   top: 0;
   transition: top 0.2s ease-in-out;
-  width: 100%;
-} */
+  width: 100%;*/
+  margin-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+}
+
+.brand {
+  color: #222;
+  font-family: Oswald, arial, sans-serif;
+  font-size: 32px;
+}
 
 .signinModal {
   max-width: 320px;
