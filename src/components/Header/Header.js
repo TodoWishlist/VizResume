@@ -44,10 +44,10 @@ class Header extends Component {
                 <NavLink href="/example">EXAMPLE</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/">CONTACT</NavLink>
+                <NavLink href="/">PLAN</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/">SIGN UP</NavLink>
+                <NavLink href="/contact">CONTACT</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink onClick={this.signinToggle}>LOG IN</NavLink>
