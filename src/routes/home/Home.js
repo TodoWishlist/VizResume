@@ -20,6 +20,7 @@ class Home extends Component {
     return (
       <div className={styles.supremeContainer}>
         <HomeAbstract />
+        <div className={styles.image} />
         <Demo />
         <HomeStory />
         <HomeBottomSignup />
