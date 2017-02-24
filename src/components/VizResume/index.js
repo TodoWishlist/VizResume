@@ -11,7 +11,8 @@
  import withStyles from 'isomorphic-style-loader/lib/withStyles';
  import * as d3 from 'd3';
  import styles from './Vizresume.css';
- import data from './data.json';
+ import allSKillsDetail from './allSKillsDetail.json';
+ import timeline from './timeline.json';
 
  class Viz extends Component {
 
@@ -23,40 +24,46 @@
      super(props);
      this.state = {
        pre: '',
+       parseDate: d3.timeParse('%Y-%m'),
      };
    }
 
+   componentWillMount() {
+     this.setState({ scatterChartxScale: d3.scaleTime()
+                      .range([40, 1140])  //  total svg is 1200 width
+                      .domain([this.state.parseDate('2007-03'), this.state.parseDate('2017-02')]) });
+     this.setState({ EOrWColorScale: d3.scaleOrdinal().range(['#c15f56', 'steelblue']).domain(['Work', 'Edu']) });
+   }
+
    componentDidMount() {
-    //  console.log(data);
      this.init();
-     this.viz(data);
+     this.viz(allSKillsDetail, timeline);
    }
 
    componentDidUpdate() {
      this.init();
-     this.viz(data);
+     this.viz(allSKillsDetail, timeline);
    }
 
    init = () => {
      d3.select('#vizSvg')
-         .attr('width', '1500px')
+         .attr('width', '1300px')
          .attr('height', '800px');
    }
 
    // add viz function
-   viz = (dataSet) => {
+   viz = (dataSet, timelineSet) => {
      const dataSetReformat = this.dataInit(dataSet);
      this.barChart(dataSetReformat);
      this.scatterChart(dataSetReformat);
      this.sunChart();
-     this.timeLine();
+     this.timeLine(timelineSet);
    };
    // reformat the time
    dataInit = (dataSet) => {
-     const parseDate = d3.timeParse('%Y-%m');
      const dataSetReformat = dataSet.map((d) => {
        const rObj = Object.assign({}, d);
-       rObj.time = parseDate(rObj.time);
+       rObj.time = this.state.parseDate(rObj.time);
        return rObj;
      });
      return dataSetReformat;
@@ -141,15 +148,19 @@
      return result;
    }
    // show the tooltip
-   showTooltip = (d) => {
+   showTooltip = (d, para) => {
+     const tooltipTime = para === 'scatterChart' ? `${d.time.getFullYear()}-${d.time.getMonth() + 1}` : `${d.start.getFullYear()}-${d.end.getFullYear()}`;
+     const tooltipSkill = para === 'scatterChart' ? d.skill : d.title;
+     const tooltipEorwname = para === 'scatterChart' ? d.EOrWName : d.fullName;
+     const tooltipShortdescription = para === 'scatterChart' ? d.ShortDes : d.ShortDes;
      // get current mouse position
      const xPos = d3.event.pageX - 15;
-     const yPos = d3.event.pageY - 15;
+     const yPos = para === 'scatterChart' ? d3.event.pageY - 15 : d3.event.pageY + 150;
      // create container for tooltip
-     d3.select(`.${styles.tooltipTime}`).text(`${d.time.getFullYear()}-${d.time.getMonth() + 1}`);
-     d3.select(`.${styles.tooltipSkill}`).text(d.skill);
-     d3.select(`.${styles.tooltipEorwname}`).text(d.EOrWName).style('color', d.EOrW === 'Edu' ? 'steelblue' : '#c15f56');
-     d3.select(`.${styles.tooltipShortdescription}`).text(d.ShortDes);
+     d3.select(`.${styles.tooltipTime}`).text(tooltipTime);
+     d3.select(`.${styles.tooltipSkill}`).text(tooltipSkill);
+     d3.select(`.${styles.tooltipEorwname}`).text(tooltipEorwname).style('color', this.state.EOrWColorScale(d.EOrW));
+     d3.select(`.${styles.tooltipShortdescription}`).text(tooltipShortdescription);
      // transform the tooltip to correct position
      d3.select(`.${styles.tooltip}`)
       .style('top', `${yPos}px`)
@@ -157,6 +168,8 @@
       .transition()
       .duration(0)
       .style('opacity', 1);
+     d3.select(`.${styles.tooltipSkill}`)
+     .style('text-align', para === 'scatterChart' ? 'center' : 'right');
    }
    // hide the tooltip
    hideTooltip = () => {
@@ -166,13 +179,10 @@
    }
 
    scatterChart = (dataSetReformat) => {
-     const parseDate = d3.timeParse('%Y-%m');
      const upperContainer = d3.select(`.${styles.scatterChart}`);
-     const xScale = d3.scaleTime().range([150, 1200]);
+     const xScale = this.state.scatterChartxScale;
      const yScale = d3.scaleLinear().range([300, 50]);
      const rScale = d3.scaleLinear().range([1, 10]);
-    //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-     xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      rScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      // add circle
@@ -183,9 +193,9 @@
       .attr('r', (d) => rScale(d.proficiency))
       .attr('cx', (d) => xScale(d.time))
       .attr('cy', (d) => yScale(d.proficiency))
-      .attr('fill', (d) => (d.EOrW === 'Edu' ? 'steelblue' : '#c15f56'))
+      .attr('fill', (d) => this.state.EOrWColorScale(d.EOrW))
       .attr('fill-opacity', 0.5)
-      .on('mouseover', (d) => this.showTooltip(d))
+      .on('mouseover', (d) => this.showTooltip(d, 'scatterChart'))
       .on('mouseout', () => this.hideTooltip());
     // add x Axis
      upperContainer.selectAll('g')
@@ -201,58 +211,43 @@
       .enter()
       .append('g')
       .attr('class', styles.upperYAxis)
-      .attr('transform', 'translate(100, 0)')
+      .attr('transform', 'translate(30, 0)')
         .call(d3.axisLeft(yScale).ticks(4));
    }
 
-   timeLine = () => {
-     const dataTimeLine = [
-       {
-         name: 'SHU',
-         start: '2007-03',
-         end: '2011-03',
-         EOrW: 'Edu',
-       },
-       {
-         name: 'PWC',
-         start: '2010-09',
-         end: '2010-12',
-         EOrW: 'Work',
-       },
-       {
-         name: 'Citi/CSC',
-         start: '2011-03',
-         end: '2012-12',
-         EOrW: 'Work',
-       },
-       {
-         name: 'GWU',
-         start: '2013-01',
-         end: '2014-08',
-         EOrW: 'Edu',
-       },
-       {
-         name: 'NETE',
-         start: '2014-06',
-         end: '2017-02',
-         EOrW: 'Work',
-       },
-     ];
-     const parseDate = d3.timeParse('%Y-%m');
+   timeLine = (timelineSet) => {
+     // get the timeline data
+     const dataTimeLine = timelineSet;
+     // clean and format the date
      const dataTimeLineReformat = dataTimeLine.map((d) => {
        const rObj = Object.assign({}, d);
-       rObj.start = parseDate(rObj.start);
-       rObj.end = parseDate(rObj.end);
+       rObj.start = this.state.parseDate(rObj.start);
+       rObj.end = this.state.parseDate(rObj.end);
        return rObj;
      });
-     const xScale = d3.scaleTime().range([150, 1200]);
+     // set scales
+     const xScale = this.state.scatterChartxScale;
      const yScale = d3.scaleOrdinal().range([30, 60]);
      const yTextScale = d3.scaleOrdinal().range([25, 75]);
-     xScale.domain([parseDate('2007-03'), parseDate('2017-02')]);
+     const yRectScale = d3.scaleOrdinal().range([10, 55]);
      yScale.domain(['Work', 'Edu']);
      yTextScale.domain(['Work', 'Edu']);
-
+     yRectScale.domain(['Work', 'Edu']);
+     // select the timeLine container
      const timeLine = d3.select(`.${styles.timeLine}`);
+     // create rect in order to mouseover
+     timeLine.selectAll('rect')
+      .data(dataTimeLineReformat, (d) => `${d.name}`)
+      .enter()
+      .append('rect')
+      .attr('class', styles.rect)
+      .attr('x', (d) => xScale(d.start))
+      .attr('y', (d) => yRectScale(d.EOrW))
+      .attr('width', (d) => (xScale(d.end) - xScale(d.start)))
+      .attr('height', 30)
+      .on('mouseover', (d) => this.showTooltip(d, 'timeline'))
+      .on('mouseout', () => this.hideTooltip());
+     // create all lines
      timeLine.selectAll('line')
       .data(dataTimeLineReformat, (d) => `${d.name}`)
       .enter()
@@ -262,8 +257,8 @@
       .attr('y1', (d) => yScale(d.EOrW))
       .attr('x2', (d) => xScale(d.end))
       .attr('y2', (d) => yScale(d.EOrW))
-      .style('stroke', (d) => (d.EOrW === 'Edu' ? 'steelblue' : '#c15f56'));
-
+      .style('stroke', (d) => this.state.EOrWColorScale(d.EOrW));
+     // create all start circle
      timeLine.selectAll('circle.start')
        .data(dataTimeLineReformat, (d) => `${d.name}-${d.start}`)
        .enter()
@@ -272,8 +267,8 @@
        .attr('cx', (d) => xScale(d.start))
        .attr('cy', (d) => yScale(d.EOrW))
        .attr('r', 3)
-       .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
-
+       .attr('fill', (d) => this.state.EOrWColorScale(d.EOrW));
+     // crate all end circle
      timeLine.selectAll('circle.end')
          .data(dataTimeLineReformat, (d) => `${d.name}-${d.end}`)
          .enter()
@@ -282,8 +277,8 @@
          .attr('cx', (d) => xScale(d.end))
          .attr('cy', (d) => yScale(d.EOrW))
          .attr('r', 3)
-         .attr('fill', (d) => (d.EOrW === 'Edu' ? '#8aae81' : '#c15f56'));
-
+         .attr('fill', (d) => this.state.EOrWColorScale(d.EOrW));
+     // create the text
      timeLine.selectAll('text')
         .data(dataTimeLineReformat, (d) => `${d.name}`)
         .enter()
@@ -382,11 +377,9 @@
              d3.selectAll('.barRect')
               .attr('fill', 'rgb(218, 103, 97)');
              // back to default position on the scatterChart
-             const parseDate = d3.timeParse('%Y-%m');
              const upperContainer = d3.select(`.${styles.scatterChart}`);
-             const xScaleInside = d3.scaleTime().range([150, 1200]);
+             const xScaleInside = this.state.scatterChartxScale;
              const yScaleInside = d3.scaleLinear().range([300, 50]);
-             xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
              yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
              // select all circle and bind the data
              const allCirclePre = upperContainer.selectAll('circle')
@@ -425,12 +418,9 @@
              d3.selectAll('.barRect')
               .attr('fill', 'rgb(218, 103, 97)');
              // back to default position on the scatterChart
-             const parseDate = d3.timeParse('%Y-%m');
              const upperContainer = d3.select(`.${styles.scatterChart}`);
-             const xScaleInside = d3.scaleTime().range([150, 1200]);
+             const xScaleInside = this.state.scatterChartxScale;
              const yScaleInside = d3.scaleLinear().range([300, 50]);
-             //  xScale.domain(d3.extent(dataSetReformat, (d) => d.time));
-             xScaleInside.domain([parseDate('2007-03'), parseDate('2017-02')]);
              yScaleInside.domain([0, d3.max(dataSetReformat, (f) => f.proficiency)]);
              const allCircleAfter = upperContainer.selectAll('circle')
               .data(dataSetReformat, (f) => `${f.skill}-${f.time}`);

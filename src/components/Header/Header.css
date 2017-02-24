@@ -1,10 +1,4 @@
- .header {
-  /*background: #f5b335;
-  height: 40px;
-  position: fixed;
-  top: 0;
-  transition: top 0.2s ease-in-out;
-  width: 100%;*/
+.header {
   margin-bottom: 6px;
   border-bottom: 1px solid #ddd;
 }
