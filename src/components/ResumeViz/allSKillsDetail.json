@@ -1,0 +1,380 @@
+[
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2007-03",
+    "proficiency": 20,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Use MySQL on a course prject."
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2008-02",
+    "proficiency": 40,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Used MySQL on a course prject."
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2010-03",
+    "proficiency": 60,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Used MySQL on Sa course prject. Learned basic knowledge for MySQL"
+  },
+  {
+    "skill": "MySQL",
+    "parent": "Database",
+    "time": "2012-04",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "Citi-CSC",
+    "ShortDes": "MySQL is the database we used in the ATM program."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2007-05",
+    "proficiency": 50,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2009-06",
+    "proficiency": 70,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2010-05",
+    "proficiency": 80,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2011-06",
+    "proficiency": 80,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2012-05",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "Citi-CSC",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2015-06",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2016-05",
+    "proficiency": 85,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL",
+    "parent": "Database",
+    "time": "2017-02",
+    "proficiency": 90,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "MongoDB",
+    "parent": "Database",
+    "time": "2012-07",
+    "proficiency": 30,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Learned NoSQL using MongoDB."
+  },
+  {
+    "skill": "MongoDB",
+    "parent": "Database",
+    "time": "2016-08",
+    "proficiency": 70,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Used MongoDB as database in a course project."
+  },
+  {
+    "skill": "PostgreSQL",
+    "parent": "Database",
+    "time": "2016-09",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used PostgreSQL as database in the FOCUS project."
+  },
+  {
+    "skill": "SQL Server",
+    "parent": "Database",
+    "time": "2011-08",
+    "proficiency": 50,
+    "EOrW": "Edu",
+    "EOrWName": "SHU",
+    "ShortDes": "Queried MySQL using SQL."
+  },
+  {
+    "skill": "SQL Server",
+    "parent": "Database",
+    "time": "2016-08",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used SQL Server as data sourse in the Site Catalog project."
+  },
+  {
+    "skill": "Teradata",
+    "parent": "Database",
+    "time": "2012-01",
+    "proficiency": 30,
+    "EOrW": "Work",
+    "EOrWName": "Citi-CSC",
+    "ShortDes": "Transfered the database to Teradata."
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2012-01",
+    "proficiency": 50,
+    "EOrW": "Work",
+    "EOrWName": "Citi-CSC",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2015-01",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "ETL Concept",
+    "parent": "ETL",
+    "time": "2016-03",
+    "proficiency": 90,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2014-06",
+    "proficiency": 30,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2015-05",
+    "proficiency": 60,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "Python",
+    "parent": "ETL",
+    "time": "2016-05",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Do ETL job."
+  },
+  {
+    "skill": "BeautifulSoup",
+    "parent": "ETL",
+    "time": "2014-01",
+    "proficiency": 30,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to extract data from websites."
+  },
+  {
+    "skill": "BeautifulSoup",
+    "parent": "ETL",
+    "time": "2016-01",
+    "proficiency": 60,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to extract data from websites."
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2014-08",
+    "proficiency": 60,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2014-10",
+    "proficiency": 70,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2015-10",
+    "proficiency": 85,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2016-10",
+    "proficiency": 85,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "D3",
+    "parent": "Data viz interact",
+    "time": "2017-02",
+    "proficiency": 95,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "Tableau",
+    "parent": "Data viz interact",
+    "time": "2015-10",
+    "proficiency": 60,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this tool to viz data."
+  },
+  {
+    "skill": "HTML",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 70,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "HTML",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "CSS",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 40,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "CSS",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "Javascript",
+    "parent": "Data viz interact",
+    "time": "2015-06",
+    "proficiency": 60,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "Javascript",
+    "parent": "Data viz interact",
+    "time": "2016-07",
+    "proficiency": 80,
+    "EOrW": "Work",
+    "EOrWName": "NETE",
+    "ShortDes": "Used this library to viz data."
+  },
+  {
+    "skill": "Hive",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 60,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Used Hive to learn big data."
+  },
+  {
+    "skill": "Spark",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 50,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Used Spark to learn big data."
+  },
+  {
+    "skill": "Pig",
+    "parent": "Big data",
+    "time": "2014-07",
+    "proficiency": 40,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Used pig to learn big data."
+  },
+  {
+    "skill": "AWS",
+    "parent": "Cloud server",
+    "time": "2014-07",
+    "proficiency": 70,
+    "EOrW": "Edu",
+    "EOrWName": "GWU",
+    "ShortDes": "Used AWS to learn cloud server."
+  }
+]

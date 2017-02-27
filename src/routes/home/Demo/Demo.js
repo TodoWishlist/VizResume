@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as d3 from 'd3';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Demo.css';
 
@@ -12,6 +13,11 @@ class Demo extends Component {
     };
   }
 
+  moveDivisor = () => {
+    const divisor = d3.select('#divisor');
+    const slider = d3.select('#slider');
+    divisor.style.width = `${slider.value} %`;
+  }
 
   render() {
     return (
@@ -22,10 +28,10 @@ class Demo extends Component {
           </div>
           <div>
             <div className={styles.imageWrapper}>
-              <div>
-                <img alt="" className={styles.imageContainer} src="http://2.bp.blogspot.com/-VUtyA1E1LXs/U-tG_FPz0UI/AAAAAAAAIHc/dXifHfeBCUQ/s1600/face-before.jpg" />
-              </div>
-              <img alt="" className={styles.imageContainer} src="http://1.bp.blogspot.com/-bEQl5-KrxHY/U-tG9gPXbZI/AAAAAAAAIHU/JEI5b_YRpjY/s1600/face-after.jpg" />
+              <figure>
+                <div id={'divisor'} />
+              </figure>
+              <input type="range" min="0" max="100" value="50" id={'slider'} onInput={this.moveDivisor} />
             </div>
           </div>
           <div className={styles.contentWrapper}>

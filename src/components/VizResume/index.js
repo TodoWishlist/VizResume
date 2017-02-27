@@ -47,7 +47,7 @@
 
    init = () => {
      d3.select('#vizSvg')
-         .attr('width', '1300px')
+         .attr('width', '1200px')
          .attr('height', '800px');
    }
 
@@ -246,26 +246,13 @@
       .attr('width', (d) => (xScale(d.end) - xScale(d.start)))
       .attr('height', 30)
       .on('mouseover', (d) => this.showTooltip(d, 'timeline'))
-      .on('mouseout', () => this.hideTooltip())
-      .on('click', (d) => {
-        if (this.state[d.name] === undefined || this.state[d.name] === -1) {
-          d3.selectAll('.scatterDot').transition()
-           .duration(500).attr('fill-opacity', 0.2);
-          d3.selectAll(`.${d.name}`).transition()
-           .duration(500).attr('fill-opacity', 0.7);
-          this.setState({ [d.name]: 1 });
-        } else {
-          d3.selectAll('.scatterDot').transition()
-           .duration(500).attr('fill-opacity', 0.5);
-          this.setState({ [d.name]: -1 });
-        }
-      });
+      .on('mouseout', () => this.hideTooltip());
      // create all lines
      timeLine.selectAll('line')
       .data(dataTimeLineReformat, (d) => `${d.name}`)
       .enter()
       .append('line')
-      .attr('class', styles.line)
+      .attr('class', (d) => `${styles.line} timeLine ${d.name}-line`)
       .attr('x1', (d) => xScale(d.start))
       .attr('y1', (d) => yScale(d.EOrW))
       .attr('x2', (d) => xScale(d.end))
@@ -301,7 +288,30 @@
         .attr('y', (d) => yTextScale(d.EOrW))
         .text((d) => d.name)
         .attr('font-family', 'sans-serif')
-        .attr('font-size', '10px');
+        .attr('font-size', '10px')
+        .on('click', (d) => {
+          if (this.state[d.name] === undefined || this.state[d.name] === -1) {
+            d3.selectAll('.scatterDot').transition()
+             .duration(500).attr('fill-opacity', 0.2);
+            d3.selectAll(`.${d.name}`).transition()
+             .duration(500).attr('fill-opacity', 0.7);
+
+            d3.selectAll('.timeLine').transition()
+             .duration(500).attr('stroke-opacity', 0.2);
+            d3.selectAll(`.${d.name}-line`).transition()
+              .duration(300).attr('stroke-opacity', 0.7);
+            this.setState({ [d.name]: 1 });// mark pre selected skill to unselected
+            this.setState({ [this.state.preTime]: -1 });
+            // mark this selected skill to be a pre selected skill
+            this.setState({ preTime: d.name });
+          } else {
+            d3.selectAll('.scatterDot').transition()
+             .duration(500).attr('fill-opacity', 0.5);
+            d3.selectAll('.timeLine').transition()
+              .duration(500).attr('stroke-opacity', 1);
+            this.setState({ [d.name]: -1 });
+          }
+        });
    }
 
    sunChart = () => {

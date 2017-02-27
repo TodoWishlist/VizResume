@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';import classnames from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Vizresume from '../../components/VizResume';
+import Resumeviz from '../../components/Resumeviz';
 import styles from './Example.css';
 
 class Example extends Component {
@@ -48,7 +49,7 @@ class Example extends Component {
             <Vizresume />
           </TabPane>
           <TabPane tabId="2">
-            <h1>vizresume</h1>
+            <Resumeviz />
           </TabPane>
         </TabContent>
       </div>
