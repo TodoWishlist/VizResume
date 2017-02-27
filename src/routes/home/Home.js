@@ -3,9 +3,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Home.css';
 import HomeAbstract from './HomeAbstract/HomeAbstract';
 // import HomeHero from './HomeHero/HomeHero';
-import Vizresume from '../../components/VizResume';
-import HomeStory from './HomeStory/HomeStory';
-import HomeBottomSignup from './HomeBottomSignup/HomeBottomSignup';
+// import Vizresume from '../../components/VizResume';
+// import HomeStory from './HomeStory/HomeStory';
+// import HomeBottomSignup from './HomeBottomSignup/HomeBottomSignup';
 import Demo from './Demo/Demo';
 
 class Home extends Component {
@@ -20,10 +20,7 @@ class Home extends Component {
     return (
       <div className={styles.supremeContainer}>
         <HomeAbstract />
-        <div className={styles.image} />
         <Demo />
-        <HomeStory />
-        <HomeBottomSignup />
       </div>
     );
   }
