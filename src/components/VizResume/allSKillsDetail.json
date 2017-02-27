@@ -5,7 +5,7 @@
     "time": "2007-03",
     "proficiency": 20,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Use MySQL on a course prject."
   },
   {
@@ -14,7 +14,7 @@
     "time": "2008-02",
     "proficiency": 40,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Used MySQL on a course prject."
   },
   {
@@ -23,8 +23,8 @@
     "time": "2010-03",
     "proficiency": 60,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
-    "ShortDes": "Used MySQL on a course prject. Learned basic knowledge for MySQL"
+    "EOrWName": "SHU",
+    "ShortDes": "Used MySQL on Sa course prject. Learned basic knowledge for MySQL"
   },
   {
     "skill": "MySQL",
@@ -32,7 +32,7 @@
     "time": "2012-04",
     "proficiency": 80,
     "EOrW": "Work",
-    "EOrWName": "Citi/CSC",
+    "EOrWName": "Citi-CSC",
     "ShortDes": "MySQL is the database we used in the ATM program."
   },
   {
@@ -41,7 +41,7 @@
     "time": "2007-05",
     "proficiency": 50,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -50,7 +50,7 @@
     "time": "2009-06",
     "proficiency": 70,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -59,7 +59,7 @@
     "time": "2010-05",
     "proficiency": 80,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -68,7 +68,7 @@
     "time": "2011-06",
     "proficiency": 80,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -77,7 +77,7 @@
     "time": "2012-05",
     "proficiency": 80,
     "EOrW": "Work",
-    "EOrWName": "Citi/CSC",
+    "EOrWName": "Citi-CSC",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -113,7 +113,7 @@
     "time": "2012-07",
     "proficiency": 30,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Learned NoSQL using MongoDB."
   },
   {
@@ -122,7 +122,7 @@
     "time": "2016-08",
     "proficiency": 70,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Used MongoDB as database in a course project."
   },
   {
@@ -140,7 +140,7 @@
     "time": "2011-08",
     "proficiency": 50,
     "EOrW": "Edu",
-    "EOrWName": "Shanghai University",
+    "EOrWName": "SHU",
     "ShortDes": "Queried MySQL using SQL."
   },
   {
@@ -158,7 +158,7 @@
     "time": "2012-01",
     "proficiency": 30,
     "EOrW": "Work",
-    "EOrWName": "Citi/CSC",
+    "EOrWName": "Citi-CSC",
     "ShortDes": "Transfered the database to Teradata."
   },
   {
@@ -167,7 +167,7 @@
     "time": "2012-01",
     "proficiency": 50,
     "EOrW": "Work",
-    "EOrWName": "Citi/CSC",
+    "EOrWName": "Citi-CSC",
     "ShortDes": "Do ETL job."
   },
   {
@@ -347,7 +347,7 @@
     "time": "2014-07",
     "proficiency": 60,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Used Hive to learn big data."
   },
   {
@@ -356,7 +356,7 @@
     "time": "2014-07",
     "proficiency": 50,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Used Spark to learn big data."
   },
   {
@@ -365,7 +365,7 @@
     "time": "2014-07",
     "proficiency": 40,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Used pig to learn big data."
   },
   {
@@ -374,7 +374,7 @@
     "time": "2014-07",
     "proficiency": 70,
     "EOrW": "Edu",
-    "EOrWName": "George Washington University",
+    "EOrWName": "GWU",
     "ShortDes": "Used AWS to learn cloud server."
   }
 ]
