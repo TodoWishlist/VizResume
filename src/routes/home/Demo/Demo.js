@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as d3 from 'd3';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Demo.css';
 
@@ -11,12 +10,22 @@ class Demo extends Component {
       dataSet: [],
       extendDataSet: [],
     };
+    this.click = false;
   }
 
-  moveDivisor = () => {
-    const divisor = d3.select('#divisor');
-    const slider = d3.select('#slider');
-    divisor.style.width = `${slider.value} %`;
+  startListener = () => {
+    this.click = true;
+  }
+
+  dragging = (event) => {
+    if (this.click) {
+      const target = document.getElementsByClassName(styles.container)[0];
+      target.style.width = `${event.nativeEvent.offsetX - 5}px`;
+    }
+  }
+
+  releaseListener = () => {
+    this.click = false;
   }
 
   render() {
@@ -26,12 +35,17 @@ class Demo extends Component {
           <div className={styles.headerWrapper}>
             <h1>vizresume</h1>
           </div>
-          <div>
-            <div className={styles.imageWrapper}>
-              <figure>
-                <div id={'divisor'} />
-              </figure>
-              <input type="range" min="0" max="100" value="50" id={'slider'} onInput={this.moveDivisor} />
+          <div className={styles.imageWrapper}>
+            <div
+              className={styles.imageSlider}
+              onMouseMove={this.dragging}
+              onMouseUp={this.releaseListener}
+            >
+              <div className={styles.container}>
+                <div className={styles.slider} onMouseDown={this.startListener} />
+                <div className={styles.img} />
+              </div>
+              <div className={styles.img} />
             </div>
           </div>
           <div className={styles.contentWrapper}>

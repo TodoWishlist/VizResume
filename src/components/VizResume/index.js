@@ -185,6 +185,46 @@
      const rScale = d3.scaleLinear().range([1, 10]);
      yScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
      rScale.domain([0, d3.max(dataSetReformat, (d) => d.proficiency)]);
+     // add x gridlines
+     upperContainer.selectAll('g')
+       .data(['xAxisGrid'], (d) => d)
+       .enter()
+       .append('g')
+       .attr('class', styles.grid)
+       .attr('transform', 'translate(0, 320)')
+       .call(d3.axisBottom(xScale)
+              .ticks(8)
+              .tickSize(-256)
+              .tickFormat(''),
+      );
+     // add x gridlines
+     upperContainer.selectAll('g')
+       .data(['yAxisGrid'], (d) => d)
+       .enter()
+       .append('g')
+       .attr('class', styles.grid)
+       .attr('transform', 'translate(100, 0)')
+       .call(d3.axisLeft(yScale)
+               .ticks(4)
+               .tickSize(-1000)
+               .tickFormat(''),
+      );
+     // add x Axis
+     upperContainer.selectAll('g')
+       .data(['xAxis'], (d) => d)
+       .enter()
+       .append('g')
+       .attr('class', styles.upperXAxis)
+       .attr('transform', 'translate(0, 30)')
+       .call(d3.axisTop(xScale).ticks(4));
+     // add y Axis
+     upperContainer.selectAll('g')
+       .data(['yAxis'], (d) => d)
+       .enter()
+       .append('g')
+       .attr('class', styles.upperYAxis)
+       .attr('transform', 'translate(30, 0)')
+         .call(d3.axisLeft(yScale).ticks(4));
      // add circle
      upperContainer.selectAll('circle')
       .data(dataSetReformat, (d) => `${d.skill}-${d.time}`)
@@ -195,24 +235,12 @@
       .attr('cy', (d) => yScale(d.proficiency))
       .attr('fill', (d) => this.state.EOrWColorScale(d.EOrW))
       .attr('fill-opacity', 0.5)
+      .attr('z-index', 100)
       .on('mouseover', (d) => this.showTooltip(d, 'scatterChart'))
       .on('mouseout', () => this.hideTooltip());
-    // add x Axis
-     upperContainer.selectAll('g')
-      .data(['xAxis'], (d) => d)
-      .enter()
-      .append('g')
-      .attr('class', styles.upperXAxis)
-      .attr('transform', 'translate(0, 30)')
-      .call(d3.axisTop(xScale).ticks(4));
-    // add y Axis
-     upperContainer.selectAll('g')
-      .data(['yAxis'], (d) => d)
-      .enter()
-      .append('g')
-      .attr('class', styles.upperYAxis)
-      .attr('transform', 'translate(30, 0)')
-        .call(d3.axisLeft(yScale).ticks(4));
+
+     // remove all path elements
+     d3.selectAll('path').remove();
    }
 
    timeLine = (timelineSet) => {

@@ -2,3 +2,26 @@
   stroke: rgb(255, 0, 0);
   stroke-width: 2;
 }
+
+.baseboard {
+  background-color: lightblue;
+  width: 800px;
+  height: 1024px;
+}
+
+.wrapper {
+  background: gary;
+  border: 1px dashed black;
+}
+
+.leftWrapper {
+  transform: translate(0, 0);
+}
+
+.mainWrapper {
+  transform: translate(200px, 0);
+}
+
+.timeWrapper {
+  transform: translate(700px, 0);
+}

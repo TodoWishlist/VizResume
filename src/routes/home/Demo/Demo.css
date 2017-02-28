@@ -8,9 +8,14 @@
 .sectionWrapper {
   flex: 1;
   text-align: center;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .headerWrapper {
+  flex: 1;
   padding: 17px;
   color: #222;
   font-size: 17px !important;
@@ -22,20 +27,13 @@
   margin-bottom: 11px !important;
 }
 
-/*.imageWrapper {
-  padding: 17px;
-  height: 320px;
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-}*/
-
 .imageContainer {
   width: 100%;
   height: 100%;
 }
 
 .imageWrapper {
+  flex: 5;
   padding: 17px;
   width: 30vw;
   height: 30vw;
@@ -44,88 +42,59 @@
   overflow: hidden;
 }
 
-.imageWrapper figure {
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-before.jpg);
-  background-size: cover;
+.imageSlider {
   position: relative;
-  font-size: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
+  width: 400px;
+  height: 400px;
+  line-height: 0;
+  cursor: hand;
 }
 
-.imageWrapper figure > img {
-  position: relative;
-  width: 100%;
-}
-
-.imageWrapper figure div {
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-after.jpg);
+.imageSlider .img {
   background-size: cover;
   position: absolute;
-  width: 50%;
-  box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  bottom: 0;
+  width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 }
 
-input[type=range] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  position: relative;
-  top: -2rem;
-  left: -2%;
-  background-color: rgba(255, 255, 255, 0.1);
-  width: 102%;
+.imageSlider > .img {
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-after.jpg);
+  z-index: 50;
 }
 
-input[type=range]:focus {
-  outline: none;
+.imageSlider .container {
+  position: absolute;
+  z-index: 200;
+  width: 50%;
+  max-width: 100%;
+  min-width: 0;
+  height: 100%;
+  background-color: white;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
-input[type=range]:active {
-  outline: none;
+.imageSlider > .container > .img {
+  position: absolute;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/photoshop-face-before.jpg);
+  width: 100%;
+  z-index: 100;
 }
 
-input[type=range]::-moz-range-track {
-  -moz-appearance: none;
-  height: 15px;
-  width: 98%;
-  background-color: rgba(255, 255, 255, 0.1);
-  position: relative;
-  outline: none;
-}
-
-input[type=range]::active {
-  border: none;
-  outline: none;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 20px;
-  height: 15px;
-  background: #fff;
-  border-radius: 0;
-}
-
-input[type=range]::-moz-range-thumb {
-  -moz-appearance: none;
-  width: 20px;
-  height: 15px;
-  background: #fff;
-  border-radius: 0;
-}
-
-input[type=range]:focus::-webkit-slider-thumb {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-input[type=range]:focus::-moz-range-thumb {
-  background: rgba(255, 255, 255, 0.5);
+.imageSlider > .container > .slider {
+  position: absolute;
+  height: 100%;
+  width: 5px;
+  top: 0;
+  right: 0;
+  z-index: 400;
+  background-color: white;
+  cursor: pointer;
 }
 
 .contentWrapper {
-
+  flex: 3;
 }
