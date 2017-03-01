@@ -51,22 +51,217 @@
          .attr('height', '1152px');
      d3.select(styles.wrapper)
       .attr('width', '800px')
-      .attr('height', '1024px');
+      .attr('height', '950px');
+
+     d3.select(`.${styles.mainWrapper}`).selectAll('line')
+       .data(['leftLine'], (d) => d)
+       .enter()
+       .append('line')
+       .attr('class', 'leftLine')
+       .attr('x1', 0)
+       .attr('y1', 0)
+       .attr('x2', 0)
+       .attr('y2', '950px')
+       .attr('stroke', 'black');
    }
 
    // add viz function
    viz = (timelineSet) => {
      this.timeLine(timelineSet);
+     this.skillPieChart();
+     this.bioText();
+     this.projectCircleChart();
    };
 
+   bioText = () => {
+     const bioWrapper = d3.select(`.${styles.bioWrapper}`);
+     const path = bioWrapper.append('path')
+      .attr('id', 'wavy') // A unique ID to reference later
+      .attr('d', 'M0,150 A100,100 0 0,1 200,150') // Notation for an SVG path
+      .style('fill', 'none')
+      .style('stroke', '#AAAAAA')
+      .style('stroke-dasharray', '5,5');
+
+    // Create an SVG text element and append a textPath element
+     bioWrapper.selectAll('text')
+      .data(['name'], (d) => d)
+      .enter().append('text')
+      .style('text-anchor', 'middle')
+      .attr('font-size', '25px')
+      .append('textPath') // append a textPath to the text element
+      .attr('xlink:href', '#wavy') // place the ID of the path here
+      .attr('startOffset', '50%') // place the text halfway on the arc
+      .text('Jiazhen ZHU');
+
+     const repeat = () => {
+       path.transition().duration(2000)
+       .attr('d', 'M25,150 A75,75 0 0,1 175,150')
+       .transition()
+       .duration(2000)
+       .attr('d', 'M0,150 A100,100 0 0,1 200,150');
+      //  .each('end', repeat);
+     };
+     repeat();
+     bioWrapper.on('click', repeat);
+   }
    skillPieChart = () => {
      const data = [
-       { skill: 'python', weigth: 80 },
-       { skill: 'MySQL', weigth: 90 },
-       { skill: 'ETL', weigth: 80 },
-       { skill: 'Post', weigth: 90 },
-       { skill: 'python', weigth: 90 },
+       { skill: 'SAS', weight: 30 },
+       { skill: 'MySQL', weight: 90 },
+       { skill: 'ETL', weight: 80 },
+       { skill: 'SQL', weight: 90 },
+       { skill: 'D3', weight: 90 },
+       { skill: 'Tableau', weight: 90 },
+       { skill: 'Javascript', weight: 80 },
+       { skill: 'HTML', weight: 90 },
+       { skill: 'CSS', weight: 90 },
      ];
+     const skillPieWrapper = d3.select(`.${styles.skillPieWrapper}`);
+     // set arc which miss the endAngle which will be set in the future
+     const arc = d3.arc()
+               .innerRadius(30)
+               .outerRadius(40)
+               .startAngle(0)
+               .cornerRadius(12);
+     // set arcBackground
+     const arcBackground = d3.arc()
+               .innerRadius(34)
+               .outerRadius(36)
+               .startAngle(0)
+               .endAngle(2 * Math.PI);
+     // create the backgound arc circle
+     skillPieWrapper.selectAll('.pieBackgroundChart')
+       .data(data, (d) => `${d.skill}-background`)
+       .enter()
+       .append('path')
+       .attr('class', 'pieBackgroundChart')
+       .attr('d', arcBackground)
+       .attr('fill', 'gray')
+       .attr('opacity', 0.3)
+       .attr('transform', (d, i) => `translate(${i % 2 === 0 ? 50 : 150}, ${(Math.floor(i / 2) * 100) + 50})`);
+     // create the skill arc for each
+     const color = d3.scaleOrdinal(d3.schemeCategory20c);
+     skillPieWrapper.selectAll('.pieChart')
+      .data(data, (d) => `${d.skill}`)
+      .enter()
+      .append('path')
+      .attr('class', 'pieChart')
+      .attr('fill', (d) => color(d.skill))
+      .attr('opacity', 0.7)
+      .attr('d', (d) => {
+        arc.endAngle((d.weight / 50) * Math.PI);
+        return arc();
+      })
+      .attr('transform', (d, i) => `translate(${i % 2 === 0 ? 50 : 150}, ${(Math.floor(i / 2) * 100) + 50})`);
+      // create the skill text for each
+     skillPieWrapper.selectAll('.pieText')
+       .data(data, (d) => `${d.skill}-text`)
+       .enter()
+       .append('text')
+       .attr('class', 'pieText')
+       .text((d) => d.skill)
+       .attr('text-anchor', 'middle')
+       .attr('font-size', '12px')
+       .attr('transform', (d, i) => `translate(${i % 2 === 0 ? 50 : 150}, ${(Math.floor(i / 2) * 100) + 53})`);
+   }
+
+   projectCircleChart = () => {
+     const projectData = [
+       {
+         projectName: 'FOCUS',
+         skill: 'D3',
+       },
+       {
+         projectName: 'FOCUS',
+         skill: 'javascript',
+       },
+       {
+         projectName: 'FOCUS',
+         skill: 'HTML',
+       },
+       {
+         projectName: 'FOCUS',
+         skill: 'CSS',
+       },
+       {
+         projectName: 'FOCUS',
+         skill: 'react',
+       },
+     ];
+     const skillR = 10;
+     const skillCoverR = 40;
+     // select main wrapper
+     const mainWrapper = d3.select(`.${styles.mainWrapper}`);
+     // set filter
+     const defs = mainWrapper.selectAll('defs')
+      .data(['defs'], (d) => d)
+      .enter()
+      .append('defs');
+     const filter = defs.append('filter').attr('id', 'gooeyCodeFilter');
+     filter.append('feGaussianBlur')
+       .attr('in', 'SourceGraphic')
+       .attr('stdDeviation', '10')
+       .attr('color-interpolation-filters', 'sRGB')
+       .attr('result', 'blur');
+     filter.append('feColorMatrix')
+       .attr('class', 'blurValues')
+       .attr('in', 'blur')
+       .attr('mode', 'matrix')
+       .attr('values', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5')
+       .attr('result', 'gooey');
+     filter.append('feBlend')
+       .attr('in', 'SourceGraphic')
+       .attr('in2', 'gooey')
+       .attr('operator', 'atop');
+     // skill circles and skillCover circle
+     const skillWrapper = mainWrapper.selectAll('.skillWrapper')
+      .data(['skillWrapper'], (d) => d)
+      .enter()
+      .append('g')
+      .attr('class', 'skillWrapper')
+      .style('filter', 'url(#gooeyCodeFilter)');
+     // create skill circles
+     skillWrapper.selectAll('.skills')
+      .data(projectData, (d) => `${d.projectName}-${d.skill}`)
+      .enter()
+      .append('circle')
+      .attr('class', 'skills')
+      .attr('cx', 100)
+      .attr('cy', 100)
+      .attr('r', skillR)
+      .style('opacity', 1)
+      .style('fill', '#1A818C');
+     // create skill circles
+     skillWrapper.selectAll('.skillCover')
+     .data(['skillCover'], (d) => d)
+     .enter()
+     .append('circle')
+     .attr('class', 'skillCover')
+     .attr('cx', 100)
+     .attr('cy', 100)
+     .attr('r', skillCoverR)
+     .style('opacity', 1)
+     .style('fill', '#1A818C');
+    // make animation
+     d3.selectAll('.skillCover')
+      .transition().duration(2000)
+      .attr('r', 0);
+     d3.selectAll('.skills')
+      .transition('move')
+      .duration(1000)
+      .delay((d, i) => i * 200)
+      .attr('cx', (d, i) => (i * 50))
+      .attr('cy', 200);
+      // Around the end of the transition above make the circles see-through a bit
+      //  d3.selectAll('.skill')
+      //   .transition('dim').duration(2000).delay(4000)
+      //   .style('opacity', 0.8);
+
+      // 'Remove' gooey filter from cities during the transition
+      // So at the end they do not appear to melt together anymore
+      //  d3.selectAll('.blurValues')
+      //   .transition().duration(4000)
+      //   .attrTween('values', d3.interpolateString('1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 6 -5'));
    }
 
    timeLine = (timelineSet) => {
@@ -153,7 +348,10 @@
          <div className={styles.baseboard}>
            <svg id={'resumeViz'}>
              <g className={styles.wrapper}>
-               <g className={styles.leftWrapper} />
+               <g className={styles.leftWrapper}>
+                 <g className={styles.bioWrapper} />
+                 <g className={styles.skillPieWrapper} />
+               </g>
                <g className={styles.mainWrapper} />
                <g className={styles.timeWrapper} />
              </g>

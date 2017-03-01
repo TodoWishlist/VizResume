@@ -1,12 +1,11 @@
 .line {
-  stroke: rgb(255, 0, 0);
   stroke-width: 2;
 }
 
 .baseboard {
-  background-color: lightblue;
+  background-color: #e8e8ea;
   width: 800px;
-  height: 1024px;
+  height: 950px;
 }
 
 .wrapper {
@@ -16,6 +15,14 @@
 
 .leftWrapper {
   transform: translate(0, 0);
+}
+
+.bioWrapper {
+  transform: translate(0, 0);
+}
+
+.skillPieWrapper {
+  transform: translate(0, 300px);
 }
 
 .mainWrapper {
