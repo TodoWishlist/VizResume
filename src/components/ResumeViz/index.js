@@ -11,7 +11,7 @@
  import withStyles from 'isomorphic-style-loader/lib/withStyles';
  import * as d3 from 'd3';
  import styles from './Resumeviz.css';
- import allSKillsDetail from './allSKillsDetail.json';
+ import allSKillScore from './allSkillScore.json';
  import timeline from './timeline.json';
 
  class ResumeViz extends Component {
@@ -26,6 +26,12 @@
        pre: '',
        parseDate: d3.timeParse('%Y-%m'),
      };
+     this.projectStartXScale = d3.scaleOrdinal().range([100, 150]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectStartYScale = d3.scaleOrdinal().range([850, 800]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectMiddleXScale = d3.scaleOrdinal().range([100, 150]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectMiddleYScale = d3.scaleOrdinal().range([100, 300]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectEndXScale = d3.scaleOrdinal().range([300, 300]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectEndYScale = d3.scaleOrdinal().range([200, 350]).domain(['FOCUS', 'SiteCatalog']);
    }
 
    componentWillMount() {
@@ -33,6 +39,9 @@
                       .range([900, 40])  //  total svg is 1024 height
                       .domain([this.state.parseDate('2007-03'), this.state.parseDate('2017-02')]) });
      this.setState({ EOrWColorScale: d3.scaleOrdinal().range(['#c15f56', 'steelblue']).domain(['Work', 'Edu']) });
+     this.setState({
+       skillColor: d3.scaleOrdinal(d3.schemeCategory20c).domain(allSKillScore.map((d) => d.skill)),
+     });
    }
 
    componentDidMount() {
@@ -140,13 +149,13 @@
        .attr('opacity', 0.3)
        .attr('transform', (d, i) => `translate(${i % 2 === 0 ? 50 : 150}, ${(Math.floor(i / 2) * 100) + 50})`);
      // create the skill arc for each
-     const color = d3.scaleOrdinal(d3.schemeCategory20c);
+
      skillPieWrapper.selectAll('.pieChart')
       .data(data, (d) => `${d.skill}`)
       .enter()
       .append('path')
       .attr('class', 'pieChart')
-      .attr('fill', (d) => color(d.skill))
+      .attr('fill', (d) => this.state.skillColor(d.skill))
       .attr('opacity', 0.7)
       .attr('d', (d) => {
         arc.endAngle((d.weight / 50) * Math.PI);
@@ -170,24 +179,55 @@
        {
          projectName: 'FOCUS',
          skill: 'D3',
+         name: 'NETE',
        },
        {
          projectName: 'FOCUS',
          skill: 'javascript',
+         name: 'NETE',
        },
        {
          projectName: 'FOCUS',
          skill: 'HTML',
+         name: 'NETE',
        },
        {
          projectName: 'FOCUS',
          skill: 'CSS',
+         name: 'NETE',
        },
        {
          projectName: 'FOCUS',
          skill: 'react',
+         name: 'NETE',
+       },
+       {
+         projectName: 'SiteCatalog',
+         skill: 'ETL',
+         name: 'NETE',
+       },
+       {
+         projectName: 'SiteCatalog',
+         skill: 'MySQL',
+         name: 'NETE',
+       },
+       {
+         projectName: 'SiteCatalog',
+         skill: 'angular',
+         name: 'NETE',
        },
      ];
+     const distinctProject = [
+       {
+         projectName: 'FOCUS',
+         name: 'NETE',
+       },
+       {
+         projectName: 'SiteCatalog',
+         name: 'NETE',
+       },
+     ];
+
      const skillR = 10;
      const skillCoverR = 40;
      // select main wrapper
@@ -225,43 +265,24 @@
       .data(projectData, (d) => `${d.projectName}-${d.skill}`)
       .enter()
       .append('circle')
-      .attr('class', 'skills')
-      .attr('cx', 100)
-      .attr('cy', 100)
+      .attr('class', (d) => `skills ${d.name} ${d.projectName}`)
+      .attr('cx', d => this.projectStartXScale(d.projectName))
+      .attr('cy', d => this.projectStartYScale(d.projectName))
       .attr('r', skillR)
       .style('opacity', 1)
-      .style('fill', '#1A818C');
+      .style('fill', '#90bfdb');
+
      // create skill circles
      skillWrapper.selectAll('.skillCover')
-     .data(['skillCover'], (d) => d)
+     .data(distinctProject, (d) => d)
      .enter()
      .append('circle')
-     .attr('class', 'skillCover')
-     .attr('cx', 100)
-     .attr('cy', 100)
+     .attr('class', (d) => `skillCover ${d.name} ${d.projectName}`)
+     .attr('cx', d => this.projectStartXScale(d.projectName))
+     .attr('cy', d => this.projectStartYScale(d.projectName))
      .attr('r', skillCoverR)
      .style('opacity', 1)
-     .style('fill', '#1A818C');
-    // make animation
-     d3.selectAll('.skillCover')
-      .transition().duration(2000)
-      .attr('r', 0);
-     d3.selectAll('.skills')
-      .transition('move')
-      .duration(1000)
-      .delay((d, i) => i * 200)
-      .attr('cx', (d, i) => (i * 50))
-      .attr('cy', 200);
-      // Around the end of the transition above make the circles see-through a bit
-      //  d3.selectAll('.skill')
-      //   .transition('dim').duration(2000).delay(4000)
-      //   .style('opacity', 0.8);
-
-      // 'Remove' gooey filter from cities during the transition
-      // So at the end they do not appear to melt together anymore
-      //  d3.selectAll('.blurValues')
-      //   .transition().duration(4000)
-      //   .attrTween('values', d3.interpolateString('1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 6 -5'));
+     .style('fill', '#90bfdb');
    }
 
    timeLine = (timelineSet) => {
@@ -277,9 +298,12 @@
      // set scales
      const xScale = d3.scaleOrdinal().range([30, 60]);
      const yScale = this.state.timeLineyScale;
+     const xTextScale = d3.scaleOrdinal().range([20, 70]);
+
     //  const yTextScale = d3.scaleOrdinal().range([25, 75]);
     //  const yRectScale = d3.scaleOrdinal().range([10, 55]);
      xScale.domain(['Work', 'Edu']);
+     xTextScale.domain(['Work', 'Edu']);
     //  yTextScale.domain(['Work', 'Edu']);
     //  yRectScale.domain(['Work', 'Edu']);
      // select the timeLine container
@@ -289,7 +313,7 @@
     //   .data(dataTimeLineReformat, (d) => `${d.name}`)
     //   .enter()
     //   .append('rect')
-    //   .attr('class', styles.rect)
+    //   .attr('class', styles.timeLineRect)
     //   .attr('x', (d) => xScale(d.start))
     //   .attr('y', (d) => yRectScale(d.EOrW))
     //   .attr('width', (d) => (xScale(d.end) - xScale(d.start)))
@@ -328,18 +352,60 @@
          .attr('r', 3)
          .attr('fill', (d) => this.state.EOrWColorScale(d.EOrW));
      // create the text
-    //  timeLine.selectAll('text')
-    //     .data(dataTimeLineReformat, (d) => `${d.name}`)
-    //     .enter()
-    //     .append('text')
-    //     .attr('class', styles.timeLineText)
-    //     .attr('x', (d) => ((xScale(d.start) + xScale(d.end)) / 2) - 10)
-    //     .attr('y', (d) => yTextScale(d.EOrW))
-    //     .text((d) => d.name)
-    //     .attr('font-family', 'sans-serif')
-    //     .attr('font-size', '10px')
-    //     .on('click', () => {
-    //     });
+     timeLine.selectAll('text')
+        .data(dataTimeLineReformat, (d) => `${d.name}`)
+        .enter()
+        .append('text')
+        .attr('class', styles.timeLineText)
+        .attr('x', (d) => xTextScale(d.EOrW))
+        .attr('y', (d) => ((yScale(d.start) + yScale(d.end)) / 2))
+        .text((d) => d.name)
+        .attr('font-family', 'sans-serif')
+        .attr('text-anchor', 'middle')
+        .attr('font-size', '10px')
+        .attr('writing-mode', 'tb')
+        .on('click', (d) => {
+          const data = ['FOCUS', 'SiteCatalog'];
+          // make animation
+          d3.selectAll(`.skillCover.${d.name}`)
+            .transition().duration(2000)
+            .attr('cx', dd => this.projectMiddleXScale(dd.projectName))
+            .attr('cy', dd => this.projectMiddleYScale(dd.projectName))
+            .on('end', () => {
+              d3.selectAll(`.skillCover.${d.name}`)
+               .transition().duration(3000)
+               .attr('r', 0);
+            });
+          d3.selectAll(`.skills.${d.name}`)
+            .transition().duration(2000)
+            .attr('cx', dd => this.projectMiddleXScale(dd.projectName))
+            .attr('cy', dd => this.projectMiddleYScale(dd.projectName));
+          d3.selectAll(`.skills.${data[0]}`)
+             .transition('move')
+             .duration(1000)
+             .delay((dd, i) => (i * 200) + 2000)
+             .attr('cx', (dd, i) => (i * 30) + 100)
+             .attr('cy', dd => this.projectEndYScale(dd.projectName));
+          d3.selectAll(`.skills.${data[1]}`)
+            .transition('move')
+            .duration(1000)
+            .delay((dd, i) => (i * 200) + 2000)
+            .attr('cx', (dd, i) => (i * 30) + 100)
+            .attr('cy', dd => this.projectEndYScale(dd.projectName));
+            // Around the end of the transition above make the circles see-through a bit
+          d3.selectAll(`.skills.${d.name}`)
+              .transition('dim').duration(2000).delay(3000)
+              .style('opacity', 0.8)
+              .on('end', () => {
+                d3.selectAll('.blurValues')
+                  .transition().duration(1)
+                  .attr('values', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 6 -5');
+                d3.selectAll('.skills')
+                  .transition().duration(1000)
+                  .style('fill', (dd) => this.state.skillColor(dd.skill));
+              });
+          d3.selectAll('.skills').on('mouseover', (dd) => console.log(dd.skill));
+        });
    }
 
    render() {

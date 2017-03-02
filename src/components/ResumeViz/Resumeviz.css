@@ -32,3 +32,10 @@
 .timeWrapper {
   transform: translate(700px, 0);
 }
+
+.timeLineText {
+  fill: #666;
+  font-weight: normal;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}

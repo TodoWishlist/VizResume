@@ -1,0 +1,38 @@
+[
+  {
+    "skill": "SAS",
+    "weight": 30
+  },
+  {
+    "skill": "MySQL",
+    "weight": 90
+  },
+  {
+    "skill": "ETL",
+    "weight": 90
+  },
+  {
+    "skill": "SQL",
+    "weight": 90
+  },
+  {
+    "skill": "D3",
+    "weight": 90
+  },
+  {
+    "skill": "Tableau",
+    "weight": 90
+  },
+  {
+    "skill": "Javascript",
+    "weight": 90
+  },
+  {
+    "skill": "HTML",
+    "weight": 90
+  },
+  {
+    "skill": "CSS",
+    "weight": 90
+  }
+]
