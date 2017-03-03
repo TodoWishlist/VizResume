@@ -83,27 +83,54 @@
    };
 
    bioText = () => {
+     const dataBio = [
+       { key: 'name', value: 'Jiazhen ZHU' },
+       { key: 'title', value: 'Data Engineer' },
+       { key: 'telephone', value: '(202)802-3368' },
+       { key: 'email', value: 'jason.jz.zhu@gmail.com' },
+       { key: 'website', value: 'www.vizresume.com/jiazhen' },
+       { key: 'address', value: '8235 Crestwood Dr' },
+     ];
+     // select bioWrapper
      const bioWrapper = d3.select(`.${styles.bioWrapper}`);
-     const path = bioWrapper.append('path')
-      .attr('id', 'wavy') // A unique ID to reference later
-      .attr('d', 'M0,150 A100,100 0 0,1 200,150') // Notation for an SVG path
-      .style('fill', 'none')
-      .style('stroke', '#AAAAAA')
-      .style('stroke-dasharray', '5,5');
-
-    // Create an SVG text element and append a textPath element
+     // crate all path for text
+     bioWrapper.selectAll('path')
+      .data(dataBio, d => `path${d.key}`)
+      .enter()
+      .append('path')
+      .attr('id', d => `path${d.key}`)
+      .attr('d', (d, i) => {
+        if (d.key === 'name') {
+          return 'M0,150 A100,100 0 0,1 200,150';
+        } else if (d.key === 'title') {
+          return 'M45 120 L 155 120';
+        }
+        return `M5 ${150 + (i * 25)} L195 ${150 + (i * 25)}`;
+      })
+     .style('fill', 'none')
+     .style('stroke', '#AAAAAA')
+     .style('stroke-dasharray', '5,5');
+     // add all text on the path
      bioWrapper.selectAll('text')
-      .data(['name'], (d) => d)
+      .data(dataBio, d => `text${d.key}`)
       .enter().append('text')
       .style('text-anchor', 'middle')
-      .attr('font-size', '25px')
+      .attr('font-size', (d) => {
+        if (d.key === 'name') {
+          return '25px';
+        } else if (d.key === 'title') {
+          return '18px';
+        }
+        return '14px';
+      })
       .append('textPath') // append a textPath to the text element
-      .attr('xlink:href', '#wavy') // place the ID of the path here
+      .attr('xlink:href', d => `#path${d.key}`) // place the ID of the path here
       .attr('startOffset', '50%') // place the text halfway on the arc
-      .text('Jiazhen ZHU');
+      .text(d => d.value);
 
+     // let name can do the animation
      const repeat = () => {
-       path.transition().duration(2000)
+       bioWrapper.selectAll('#pathname').transition().duration(2000)
        .attr('d', 'M25,150 A75,75 0 0,1 175,150')
        .transition()
        .duration(2000)
