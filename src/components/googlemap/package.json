@@ -1,0 +1,6 @@
+{
+  "name": "googlemap",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./googlemap.js"
+}

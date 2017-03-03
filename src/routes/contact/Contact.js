@@ -10,6 +10,8 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Contact.css';
+import ModalExample from '../../components/Email/Email';
+import GoogleMap from '../../components/googlemap/googlemap';
 
 class Contact extends React.Component {
   static propTypes = {
@@ -21,7 +23,8 @@ class Contact extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
-          <p>...</p>
+          <GoogleMap initialCenter={{ lng: -77.147696, lat: 39.080783 }} />
+          <ModalExample />
         </div>
       </div>
     );
