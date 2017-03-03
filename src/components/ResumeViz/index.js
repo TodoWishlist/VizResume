@@ -12,6 +12,7 @@
  import * as d3 from 'd3';
  import styles from './Resumeviz.css';
  import allSKillScore from './allSkillScore.json';
+ import project from './project.json';
  import timeline from './timeline.json';
 
  class ResumeViz extends Component {
@@ -26,12 +27,41 @@
        pre: '',
        parseDate: d3.timeParse('%Y-%m'),
      };
-     this.projectStartXScale = d3.scaleOrdinal().range([100, 150]).domain(['FOCUS', 'SiteCatalog']);
-     this.projectStartYScale = d3.scaleOrdinal().range([850, 800]).domain(['FOCUS', 'SiteCatalog']);
-     this.projectMiddleXScale = d3.scaleOrdinal().range([100, 150]).domain(['FOCUS', 'SiteCatalog']);
-     this.projectMiddleYScale = d3.scaleOrdinal().range([100, 300]).domain(['FOCUS', 'SiteCatalog']);
-     this.projectEndXScale = d3.scaleOrdinal().range([300, 300]).domain(['FOCUS', 'SiteCatalog']);
-     this.projectEndYScale = d3.scaleOrdinal().range([200, 350]).domain(['FOCUS', 'SiteCatalog']);
+     this.projectStartXScale = d3.scaleOrdinal().range([100, 200, 300, 350]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     this.projectStartYScale = d3.scaleOrdinal().range([850, 800, 900, 800]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     this.projectMiddleXScale = d3.scaleOrdinal().range([100, 100, 100, 100]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     this.projectMiddleYScale = d3.scaleOrdinal().range([100, 300, 500, 100]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     this.projectEndXScale = d3.scaleOrdinal().range([300, 300, 300, 300]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     this.projectEndYScale = d3.scaleOrdinal().range([100, 250, 400, 100]).domain(['FOCUS', 'SiteCatalog', 'Others', 'BEFAS']);
+     // prepare the distinctProject
+     const hashMap = {};
+     this.distinctProject = project.map((d) => {
+       if (hashMap[`${d.projectName}-${d.name}`] === undefined) {
+         const result = {};
+         hashMap[`${d.projectName}-${d.name}`] = 1;
+         result.projectName = d.projectName;
+         result.name = d.name;
+         return result;
+       }
+       return '';
+     }).filter(d => d !== '');
+     this.projectDetail = [
+       {
+         name: 'NETE',
+         projectName: 'FOCUS',
+         projectDetail: 'lalalalalalalalalalalalalallalalalala',
+       },
+       {
+         name: 'NETE',
+         projectName: 'SiteCatalog',
+         projectDetail: 'blblblblblblblbllblblblblblblblblblblb',
+       },
+       {
+         name: 'NETE',
+         projectName: 'Others',
+         projectDetail: 'dedededeedeeeeeeeeeededededededededededed',
+       },
+     ];
    }
 
    componentWillMount() {
@@ -46,12 +76,12 @@
 
    componentDidMount() {
      this.init();
-     this.viz(timeline);
+     this.viz(timeline, project);
    }
 
    componentDidUpdate() {
      this.init();
-     this.viz(timeline);
+     this.viz(timeline, project);
    }
 
    init = () => {
@@ -75,11 +105,11 @@
    }
 
    // add viz function
-   viz = (timelineSet) => {
+   viz = (timelineSet, projectSet) => {
      this.timeLine(timelineSet);
      this.skillPieChart();
      this.bioText();
-     this.projectCircleChart();
+     this.projectCircleChart(projectSet);
    };
 
    bioText = () => {
@@ -108,7 +138,7 @@
         return `M5 ${150 + (i * 25)} L195 ${150 + (i * 25)}`;
       })
      .style('fill', 'none')
-     .style('stroke', '#AAAAAA')
+     .style('stroke', d => (d.key === 'name' ? '#AAAAAA' : ''))
      .style('stroke-dasharray', '5,5');
      // add all text on the path
      bioWrapper.selectAll('text')
@@ -201,59 +231,8 @@
        .attr('transform', (d, i) => `translate(${i % 2 === 0 ? 50 : 150}, ${(Math.floor(i / 2) * 100) + 53})`);
    }
 
-   projectCircleChart = () => {
-     const projectData = [
-       {
-         projectName: 'FOCUS',
-         skill: 'D3',
-         name: 'NETE',
-       },
-       {
-         projectName: 'FOCUS',
-         skill: 'javascript',
-         name: 'NETE',
-       },
-       {
-         projectName: 'FOCUS',
-         skill: 'HTML',
-         name: 'NETE',
-       },
-       {
-         projectName: 'FOCUS',
-         skill: 'CSS',
-         name: 'NETE',
-       },
-       {
-         projectName: 'FOCUS',
-         skill: 'react',
-         name: 'NETE',
-       },
-       {
-         projectName: 'SiteCatalog',
-         skill: 'ETL',
-         name: 'NETE',
-       },
-       {
-         projectName: 'SiteCatalog',
-         skill: 'MySQL',
-         name: 'NETE',
-       },
-       {
-         projectName: 'SiteCatalog',
-         skill: 'angular',
-         name: 'NETE',
-       },
-     ];
-     const distinctProject = [
-       {
-         projectName: 'FOCUS',
-         name: 'NETE',
-       },
-       {
-         projectName: 'SiteCatalog',
-         name: 'NETE',
-       },
-     ];
+   projectCircleChart = (projectSet) => {
+     const projectData = projectSet;
 
      const skillR = 10;
      const skillCoverR = 40;
@@ -299,9 +278,9 @@
       .style('opacity', 1)
       .style('fill', '#90bfdb');
 
-     // create skill circles
+     // create skill circleCover
      skillWrapper.selectAll('.skillCover')
-     .data(distinctProject, (d) => d)
+     .data(this.distinctProject, (d) => d)
      .enter()
      .append('circle')
      .attr('class', (d) => `skillCover ${d.name} ${d.projectName}`)
@@ -310,6 +289,47 @@
      .attr('r', skillCoverR)
      .style('opacity', 1)
      .style('fill', '#90bfdb');
+
+    //  const mainInfo = mainWrapper.selectAll('g')
+    //   .data(['mainInfo'], d => d)
+    //   .enter()
+    //   .append('g')
+    //   .attr('class', 'mainInfo');
+     //
+    //  mainWrapper.select('.mainInfo').selectAll('path')
+    //   .data(['NETE', 'VA, USA', 'Data Engineer'], d => `path${d}`)
+    //   .enter()
+    //   .append('path')
+    //   .attr('id', d => `path${d}`)
+    //   .attr('d', (d, i) => {
+    //     if (i === 0) {
+    //       return 'M45 120 L 255 120';
+    //     } else if (i === 1) {
+    //       return 'M190 120 L 255 120';
+    //     }
+    //     return 'M45 145 L 255 145';
+    //   })
+    //  .style('fill', 'none')
+    //  .style('stroke', (d, i) => (i === 0 ? '#d1d1d1' : ''));
+     //
+    //  // add all text on the path
+    //  mainWrapper.select('.mainInfo').selectAll('text')
+    //   .data(['NETE', 'VA, USA', 'Data Engineer'], d => `text${d}`)
+    //   .enter()
+    //   .append('text')
+    //   .style('text-anchor', 'start')
+    //   .attr('font-size', (d, i) => {
+    //     if (i === 0) {
+    //       return '18px';
+    //     } else if (i === 1) {
+    //       return '18px';
+    //     }
+    //     return '18px';
+    //   })
+    //   .append('textPath') // append a textPath to the text element
+    //   .attr('xlink:href', d => `#path${d}`) // place the ID of the path here
+    //   // .attr('startOffset', '50%') // place the text halfway on the arc
+    //   .text(d => d);
    }
 
    timeLine = (timelineSet) => {
@@ -392,49 +412,85 @@
         .attr('font-size', '10px')
         .attr('writing-mode', 'tb')
         .on('click', (d) => {
-          const data = ['FOCUS', 'SiteCatalog'];
-          // make animation
-          d3.selectAll(`.skillCover.${d.name}`)
-            .transition().duration(2000)
-            .attr('cx', dd => this.projectMiddleXScale(dd.projectName))
-            .attr('cy', dd => this.projectMiddleYScale(dd.projectName))
-            .on('end', () => {
-              d3.selectAll(`.skillCover.${d.name}`)
-               .transition().duration(3000)
-               .attr('r', 0);
-            });
-          d3.selectAll(`.skills.${d.name}`)
-            .transition().duration(2000)
-            .attr('cx', dd => this.projectMiddleXScale(dd.projectName))
-            .attr('cy', dd => this.projectMiddleYScale(dd.projectName));
-          d3.selectAll(`.skills.${data[0]}`)
-             .transition('move')
-             .duration(1000)
-             .delay((dd, i) => (i * 200) + 2000)
-             .attr('cx', (dd, i) => (i * 30) + 100)
-             .attr('cy', dd => this.projectEndYScale(dd.projectName));
-          d3.selectAll(`.skills.${data[1]}`)
-            .transition('move')
-            .duration(1000)
-            .delay((dd, i) => (i * 200) + 2000)
-            .attr('cx', (dd, i) => (i * 30) + 100)
-            .attr('cy', dd => this.projectEndYScale(dd.projectName));
-            // Around the end of the transition above make the circles see-through a bit
-          d3.selectAll(`.skills.${d.name}`)
-              .transition('dim').duration(2000).delay(3000)
-              .style('opacity', 0.8)
-              .on('end', () => {
-                d3.selectAll('.blurValues')
-                  .transition().duration(1)
-                  .attr('values', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 6 -5');
-                d3.selectAll('.skills')
-                  .transition().duration(1000)
-                  .style('fill', (dd) => this.state.skillColor(dd.skill));
-              });
-          d3.selectAll('.skills').on('mouseover', (dd) => console.log(dd.skill));
+          if (this.state[d.name] === undefined || this.state[d.name] === -1) {
+            this.projectCircleMoveFront(d);
+            this.setState({ [d.name]: 1 });
+            console.log('click');
+          } else {
+            this.projectCircleMoveBack(d);
+            this.setState({ [d.name]: -1 });
+            console.log('unclick');
+          }
         });
    }
 
+   projectCircleMoveFront = (data) => {
+     const projectNameArray = this.distinctProject
+       .filter(d => d.name === data.name)
+       .map(d => d.projectName);
+     // make animation
+     d3.selectAll(`.skillCover.${data.name}`)
+       .transition().duration(2000)
+       .attr('cx', d => this.projectMiddleXScale(d.projectName))
+       .attr('cy', d => this.projectMiddleYScale(d.projectName))
+       .on('end', () => {
+         d3.selectAll(`.skillCover.${data.name}`)
+          .transition().duration(3000)
+          .attr('r', 0);
+       });
+     d3.selectAll(`.skills.${data.name}`)
+       .transition().duration(2000)
+       .attr('cx', d => this.projectMiddleXScale(d.projectName))
+       .attr('cy', d => this.projectMiddleYScale(d.projectName));
+     projectNameArray.forEach((p) => {
+       d3.selectAll(`.skills.${p}`)
+          .transition('move')
+          .duration(1000)
+          .delay((d, i) => (i * 200) + 2000)
+          .attr('cx', (d, i) => (i * 30) + 100)
+          .attr('cy', d => this.projectEndYScale(d.projectName));
+     });
+     // Around the end of the transition above make the circles see-through a bit
+     d3.selectAll(`.skills.${data.name}`)
+         .transition('dim').duration(2000).delay(3000)
+         .style('opacity', 0.8)
+         .on('end', () => {
+           d3.selectAll('.blurValues')
+             .transition().duration(1)
+             .attr('values', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 6 -5');
+           d3.selectAll('.skills')
+             .transition().duration(1000)
+             .style('fill', (d) => this.state.skillColor(d.skill));
+         });
+     d3.selectAll('.skills').on('mouseover', (d) => console.log(d.skill));
+   }
+
+   projectCircleMoveBack = (data) => {
+     const skillR = 10;
+     // move skillCover back to start position
+     d3.selectAll(`.skillCover.${data.name}`)
+       .attr('cx', d => this.projectStartXScale(d.projectName))
+       .attr('cy', d => this.projectStartYScale(d.projectName));
+     // begin dim the skills circle
+     d3.selectAll(`.skills.${data.name}`)
+       .transition().duration(2000)
+       .style('opacity', 0);
+     // in the mean time, transition the skillCover's R
+     d3.selectAll(`.skillCover.${data.name}`)
+       .transition().duration(2000)
+       .attr('r', 40);
+     // at the end, move the skills back to start position
+     d3.selectAll(`.skills.${data.name}`)
+       .transition().delay(2000)
+        .attr('cx', d => this.projectStartXScale(d.projectName))
+        .attr('cy', d => this.projectStartYScale(d.projectName))
+        .attr('r', skillR)
+        .on('end', () => {
+          d3.selectAll(`.skills.${data.name}`)
+            .style('opacity', 1)
+            .style('fill', '#90bfdb');
+        });
+   }
    render() {
      return (
        <div>

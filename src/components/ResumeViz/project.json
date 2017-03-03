@@ -1,0 +1,62 @@
+[
+  {
+    "projectName": "FOCUS",
+    "skill": "D3",
+    "name": "NETE"
+  },
+  {
+    "projectName": "FOCUS",
+    "skill": "javascript",
+    "name": "NETE"
+  },
+  {
+    "projectName": "FOCUS",
+    "skill": "HTML",
+    "name": "NETE"
+  },
+  {
+    "projectName": "FOCUS",
+    "skill": "CSS",
+    "name": "NETE"
+  },
+  {
+    "projectName": "FOCUS",
+    "skill": "react",
+    "name": "NETE"
+  },
+  {
+    "projectName": "SiteCatalog",
+    "skill": "ETL",
+    "name": "NETE"
+  },
+  {
+    "projectName": "SiteCatalog",
+    "skill": "MySQL",
+    "name": "NETE"
+  },
+  {
+    "projectName": "SiteCatalog",
+    "skill": "angular",
+    "name": "NETE"
+  },
+  {
+    "projectName": "Others",
+    "skill": "Tableau",
+    "name": "NETE"
+  },
+  {
+    "projectName": "Others",
+    "skill": "SQL Server",
+    "name": "NETE"
+  },
+  {
+    "projectName": "BEFAS",
+    "skill": "SQL Server",
+    "name": "Citi-CSC"
+  },
+  {
+    "projectName": "BEFAS",
+    "skill": "SQL",
+    "name": "Citi-CSC"
+  }
+]
