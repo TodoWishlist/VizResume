@@ -14,6 +14,7 @@
  import allSKillScore from './allSkillScore.json';
  import project from './project.json';
  import timeline from './timeline.json';
+ import EorW from './components/EorW/EorW';
 
  class ResumeViz extends Component {
 
@@ -45,7 +46,7 @@
        }
        return '';
      }).filter(d => d !== '');
-     this.projectDetail = [
+     this.projectDetailData = [
        {
          name: 'NETE',
          projectName: 'FOCUS',
@@ -87,7 +88,7 @@
    init = () => {
      d3.select('#resumeViz')
          .attr('width', '900px')
-         .attr('height', '1152px');
+         .attr('height', '950px');
      d3.select(styles.wrapper)
       .attr('width', '800px')
       .attr('height', '950px');
@@ -110,6 +111,7 @@
      this.skillPieChart();
      this.bioText();
      this.projectCircleChart(projectSet);
+     this.projectDetail();
    };
 
    bioText = () => {
@@ -289,47 +291,48 @@
      .attr('r', skillCoverR)
      .style('opacity', 1)
      .style('fill', '#90bfdb');
+   }
 
-    //  const mainInfo = mainWrapper.selectAll('g')
-    //   .data(['mainInfo'], d => d)
-    //   .enter()
-    //   .append('g')
-    //   .attr('class', 'mainInfo');
-     //
+   projectDetail = () => {
+    // // select main wrapper
+    //  const mainWrapper = d3.select(`.${styles.mainWrapper}`);
+    //  mainWrapper.selectAll('g')
+    //    .data(['mainInfo'], d => d)
+    //    .enter()
+    //    .append('g')
+    //    .attr('class', 'mainInfo');
+    //
     //  mainWrapper.select('.mainInfo').selectAll('path')
-    //   .data(['NETE', 'VA, USA', 'Data Engineer'], d => `path${d}`)
-    //   .enter()
-    //   .append('path')
-    //   .attr('id', d => `path${d}`)
-    //   .attr('d', (d, i) => {
-    //     if (i === 0) {
-    //       return 'M45 120 L 255 120';
-    //     } else if (i === 1) {
-    //       return 'M190 120 L 255 120';
-    //     }
-    //     return 'M45 145 L 255 145';
-    //   })
-    //  .style('fill', 'none')
-    //  .style('stroke', (d, i) => (i === 0 ? '#d1d1d1' : ''));
-     //
+    //    .data(['Data Engineer', 'NETE / McLean, VA, USA'], d => `path${d}`)
+    //    .enter()
+    //    .append('path')
+    //    .attr('id', d => `path${d}`)
+    //    .attr('d', (d, i) => {
+    //      if (i === 0) {
+    //        return 'M90 70 L 300 70';
+    //      }
+    //      return 'M90 95 L 300 95';
+    //    })
+    //   .style('fill', 'none')
+    //   .style('stroke', (d, i) => (i === 0 ? '' : ''));
+    //
     //  // add all text on the path
     //  mainWrapper.select('.mainInfo').selectAll('text')
-    //   .data(['NETE', 'VA, USA', 'Data Engineer'], d => `text${d}`)
-    //   .enter()
-    //   .append('text')
-    //   .style('text-anchor', 'start')
-    //   .attr('font-size', (d, i) => {
-    //     if (i === 0) {
-    //       return '18px';
-    //     } else if (i === 1) {
-    //       return '18px';
-    //     }
-    //     return '18px';
-    //   })
-    //   .append('textPath') // append a textPath to the text element
-    //   .attr('xlink:href', d => `#path${d}`) // place the ID of the path here
-    //   // .attr('startOffset', '50%') // place the text halfway on the arc
-    //   .text(d => d);
+    //    .data(['Data Engineer', 'NETE / McLean, VA, USA'], d => `text${d}`)
+    //    .enter()
+    //    .append('text')
+    //    .attr('class', styles.projectHeader)
+    //    .style('text-anchor', 'start')
+    //    .attr('font-size', (d, i) => {
+    //      if (i === 0) {
+    //        return '18px';
+    //      }
+    //      return '14px';
+    //    })
+    //    .append('textPath') // append a textPath to the text element
+    //    .attr('xlink:href', d => `#path${d}`) // place the ID of the path here
+    //    // .attr('startOffset', '50%') // place the text halfway on the arc
+    //    .text(d => d);
    }
 
    timeLine = (timelineSet) => {
@@ -493,7 +496,7 @@
    }
    render() {
      return (
-       <div>
+       <div className={styles.outerContainer}>
          <div className={styles.baseboard}>
            <svg id={'resumeViz'}>
              <g className={styles.wrapper}>
@@ -506,6 +509,7 @@
              </g>
            </svg>
          </div>
+         <EorW />
        </div>
      );
    }

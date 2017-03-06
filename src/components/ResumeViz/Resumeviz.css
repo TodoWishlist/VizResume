@@ -2,6 +2,10 @@
   stroke-width: 2;
 }
 
+.outerContainer {
+  position: relative;
+}
+
 .baseboard {
   background-color: #e8e8ea;
   width: 800px;
