@@ -511,6 +511,7 @@
            </svg>
          </div>
          <EorW dataSet={timeline} />
+         <ProjectSection />
        </div>
      );
    }
