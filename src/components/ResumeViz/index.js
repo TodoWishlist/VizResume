@@ -15,6 +15,7 @@
  import project from './project.json';
  import timeline from './timeline.json';
  import EorW from './components/EorW/EorW';
+ import ProjectSection from './components/ProjectSection/ProjectSection';
 
  class ResumeViz extends Component {
 
@@ -509,7 +510,7 @@
              </g>
            </svg>
          </div>
-         <EorW />
+         <EorW dataSet={timeline} />
        </div>
      );
    }
