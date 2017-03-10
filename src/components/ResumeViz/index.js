@@ -51,17 +51,17 @@
        {
          name: 'NETE',
          projectName: 'FOCUS',
-         projectDetail: 'lalalalalalalalalalalalalallalalalala',
+         projectDetail: 'Used PERN (PostgreSQL, Express, React, Node) to create Data Viz Site based on D3 and restFUL.',
        },
        {
          name: 'NETE',
          projectName: 'SiteCatalog',
-         projectDetail: 'blblblblblblblbllblblblblblblblblblblb',
+         projectDetail: 'Using Python, SQL queries, and Excel to extract data which the clients need (Data Extraction), using Python, SQL queries, and Excel to clean the data and using D3, Tabeau, and Excel to present data to clients (Data Analysis and Data Viz)',
        },
        {
          name: 'NETE',
          projectName: 'Others',
-         projectDetail: 'dedededeedeeeeeeeeeededededededededededed',
+         projectDetail: 'Migrated tables from MS-SQL database to MySQL database',
        },
      ];
    }
@@ -420,6 +420,13 @@
             this.projectCircleMoveFront(d);
             this.setState({ [d.name]: 1 });
             console.log('click');
+            console.log(d3.select('#projectFOCUS'));
+            d3.select('#projectFOCUS')
+              .style('top', '300px')
+              .style('left', '300px')
+              .transition()
+              .duration(1000)
+              .style('opacity', 1);
           } else {
             this.projectCircleMoveBack(d);
             this.setState({ [d.name]: -1 });
@@ -511,7 +518,7 @@
            </svg>
          </div>
          <EorW dataSet={timeline} />
-         <ProjectSection />
+         <ProjectSection dataSet={this.projectDetailData} />
        </div>
      );
    }

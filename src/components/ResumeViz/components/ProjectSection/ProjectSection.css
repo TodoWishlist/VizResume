@@ -1,5 +1,12 @@
 .projectContainer {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 400px;
+  line-height: 16px;
+  padding: 10px;
+  border: 1px solid rgba(200, 200, 200, 0.5);
+  cursor: default;
+  pointer-events: none;
 }
